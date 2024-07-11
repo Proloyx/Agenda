@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
-    <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
+    <!-- <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
+    <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" /> -->
     <PackageReference Include="dotnetenv" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,8 +21,8 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
   </ItemGroup>
 
-  <Target Name="Tailwind" BeforeTargets="Build">
-  <Exec Command="npm run css:build"/>
-  </Target>
+  <!-- <Target Name="Tailwind" BeforeTargets="Build">
+  <Exec Command="npm run watch"/> 
+  </Target>-->
 
 </Project>
