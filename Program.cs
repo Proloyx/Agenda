@@ -1,7 +1,15 @@
+using Agenda.Data;
+using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
+
+Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Env.GetString("DbConnection")));
 
 var app = builder.Build();
 
