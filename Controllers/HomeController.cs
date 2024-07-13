@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Agenda.Models;
 using Agenda.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Agenda.Services;
 
 namespace Agenda.Controllers;
 
+[Authorize]
+//[TypeFilter(typeof(RedirectionFilter))]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

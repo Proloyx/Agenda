@@ -1,6 +1,8 @@
+using Agenda.Models;
 using Agenda.Data;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 Env.Load();
 
@@ -10,6 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Env.GetString("DbConnection")));
+
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option => {
+        option.LoginPath = "/Session/Index"; 
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        option.SlidingExpiration = true;
+        option.Cookie.HttpOnly = true;
+        option.Cookie.Name = "Agenda-Auth";
+    });
+
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 var app = builder.Build();
 
@@ -30,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Session}/{action=Index}/{id?}");
 
 app.Run();
