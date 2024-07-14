@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text.Json
+@using Agenda.Data
+
+@{
+  if (User.Identity.IsAuthenticated){
+   var json = User.FindFirst("User")?.Value;
+   var user = JsonSerializer.Deserialize<User>(json); 
+   ViewData["User"] = user.Name;
+   ViewData["Email"] = user.Email;
+}}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,7 +20,7 @@
   <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
   <header>
     <div class="min-h-full">
       <nav class="bg-indigo-600">
@@ -20,20 +31,18 @@
                 <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
                   alt="Your Company">
               </div>
+
+              @* Navigation Menu *@
+
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                   <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
                   <a asp-area="" asp-controller="Home" asp-action="Index"
                     class="bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium"
                     aria-current="page">Dashboard</a>
-                  <a asp-area="" asp-controller="HelloWorld" asp-action="Index"
-                    class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Index</a>
-                  <a asp-area="" asp-controller="HelloWorld" asp-action="Welcome"
-                    class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Welcome</a>
-                  <a asp-area="" asp-controller="HelloWorld" asp-action="Details"
-                    class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium">Details</a>
                 </div>
               </div>
+
             </div>
             <div class="hidden md:block">
               <div class="ml-4 flex items-center md:ml-6">
@@ -48,6 +57,7 @@
                 </button>
 
                 <!-- Profile dropdown -->
+                
                 <div class="relative ml-3">
                   <div>
                     <button type="button"
@@ -70,14 +80,12 @@
                   From: "transform opacity-100 scale-100"
                   To: "transform opacity-0 scale-95"
               -->
-                  <div
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  <div id="user-menu"
+                    class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100", Not Active: "" -->
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                       id="user-menu-item-0">Your Profile</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                      id="user-menu-item-1">Settings</a>
                     <a asp-controller="Session" asp-action="Logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                       id="user-menu-item-2">Sign out</a>
                   </div>
@@ -85,20 +93,21 @@
               </div>
             </div>
             <div class="-mr-2 flex md:hidden">
+
               <!-- Mobile menu button -->
               <button type="button"
                 class="inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-200 hover:bg-indigo-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
-                aria-controls="mobile-menu" aria-expanded="false">
+                aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
                 <span class="sr-only">Open main menu</span>
                 <!-- Menu open: "hidden", Menu closed: "block" -->
                 <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                  aria-hidden="true">
+                  aria-hidden="true" id="menu-open-icon">
                   <path stroke-linecap="round" stroke-linejoin="round"
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
                 <!-- Menu open: "block", Menu closed: "hidden" -->
                 <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                  aria-hidden="true">
+                  aria-hidden="true" id="menu-close-icon">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -107,19 +116,11 @@
         </div>
 
         <!-- Mobile menu, show/hide based on menu state. -->
-        <div class="md:hidden" id="mobile-menu">
+        <div class="hidden md:hidden" id="mobile-menu">
           <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
-            <a href="#" class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+            <a asp-action="Index" asp-controller="Home" class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
               aria-current="page">Dashboard</a>
-            <a href="#"
-              class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Team</a>
-            <a href="#"
-              class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-            <a href="#"
-              class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-            <a href="#"
-              class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium">Reports</a>
           </div>
           <div class="border-t border-indigo-700 pb-3 pt-4">
             <div class="flex items-center px-5">
@@ -129,8 +130,8 @@
                   alt="">
               </div>
               <div class="ml-3">
-                <div class="text-base font-medium text-white">Tom Cook</div>
-                <div class="text-sm font-medium text-indigo-300">tom@example.com</div>
+                <div class="text-base font-medium text-white">@ViewData["User"]</div>
+                <div class="text-sm font-medium text-indigo-300">@ViewData["Email"]</div>
               </div>
               <button type="button"
                 class="ml-auto flex-shrink-0 rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
@@ -146,8 +147,6 @@
               <a href="#"
                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">Your
                 Profile</a>
-              <a href="#"
-                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">Settings</a>
               <a asp-controller="Session" asp-action="Logout"
                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">Sign out</a>
             </div>
@@ -162,33 +161,16 @@
       </main>
     </div>
   </header>
-  <div class="container">
+  <div class="container flex-grow">
     <main role="main" class="pb-3">
       @RenderBody()
     </main>
   </div>
 
-  <footer class="bg-gray-900" aria-labelledby="footer-heading">
+  <footer class="bg-gray-900">
     <div class="mx-auto px-6 pb-8 lg:px-8  ">
-      <div class="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24 lg:flex lg:items-center lg:justify-between">
-        <div>
-          <h3 class="text-sm font-semibold leading-6 text-white">Subscribe to our newsletter</h3>
-          <p class="mt-2 text-sm leading-6 text-gray-300">The latest news, articles, and resources, sent to your inbox
-            weekly.</p>
-        </div>
-        <form class="mt-6 sm:flex sm:max-w-md lg:mt-0">
-          <label for="email-address" class="sr-only">Email address</label>
-          <input type="email" name="email-address" id="email-address" autocomplete="email" required=""
-            class="w-full min-w-0 appearance-none rounded-md border-0 bg-white/5 px-3 py-1.5 text-base text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:w-56 sm:text-sm sm:leading-6"
-            placeholder="Enter your email">
-          <div class="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
-            <button type="submit"
-              class="flex w-full items-center justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Subscribe</button>
-          </div>
-        </form>
-      </div>
-      <div class="mt-8 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
-        <div class="flex space-x-6 md:order-2 bg-gray-700">
+      <div class=" pt-8 md:flex md:items-center md:justify-between">
+        <div class="flex space-x-6 md:order-2">
           <a href="#" class="text-gray-500 hover:text-gray-400">
             <span class="sr-only">Facebook</span>
             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -242,7 +224,43 @@
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu')
+        userMenuButton.addEventListener('click', () => {
+            if (userMenu.classList.contains('hidden')) {
+                userMenu.classList.remove('hidden', 'transform', 'opacity-0', 'scale-95');
+                userMenu.classList.add('transition', 'ease-out', 'duration-100', 'transform', 'opacity-100', 'scale-100');
+            } else {
+                userMenu.classList.add('transition', 'ease-in', 'duration-75', 'transform', 'opacity-0', 'scale-95');
+                userMenu.classList.remove('opacity-100', 'scale-100');
+                setTimeout(() => {
+                    userMenu.classList.add('hidden');
+                }, 75);
+            }
+        });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
+                });
+            });
+        </script>
+
   @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 
 </html>

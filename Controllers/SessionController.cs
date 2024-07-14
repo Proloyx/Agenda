@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -41,29 +42,19 @@ namespace Agenda.Controllers
             try
             {
                 //Buscando el usuario
-                var login = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+                var login = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
                 
                 if (login == null)
                 {
                     ModelState.AddModelError(string.Empty, "El nombre de usuario o la contraseña son incorrectos.");
                     return View("Index");
                 }
-
-                // Creando un token Jwt con los datos del usuario
-                var tokenhandler = new JwtSecurityTokenHandler();
-                var tokendesc = new SecurityTokenDescriptor{
-                    Subject = new ClaimsIdentity(new Claim[]{
-                        new Claim("user", JsonSerializer.Serialize(login))
-                    }),
-                    Expires = DateTime.UtcNow.AddHours(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.GetString("JwtKey"))),SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenhandler.CreateToken(tokendesc);
-
+                
                 //Guardando el token en las cookies
                 List<Claim> claims = new List<Claim> () {
-                new Claim("token", tokenhandler.WriteToken(token))
+                new Claim("user", JsonSerializer.Serialize(login))
                 };
+
                 ClaimsIdentity ci = new ClaimsIdentity (claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 ClaimsPrincipal cp = new ClaimsPrincipal (ci);
                 await HttpContext.SignInAsync(cp, new AuthenticationProperties{IsPersistent=true});
