@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "12fqgGGHRJ0=",
+  "dgSpecHash": "10G38JIbQ1Q=",
   "success": true,
   "projectFilePath": "/Users/eloy/Desktop/Eloy/Programacion/Agenda/Agenda.csproj",
   "expectedPackageFiles": [
     "/Users/eloy/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
+    "/Users/eloy/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/eloy/.nuget/packages/dotnetenv/3.0.0/dotnetenv.3.0.0.nupkg.sha512",
     "/Users/eloy/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/eloy/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.7/microsoft.aspnetcore.authentication.jwtbearer.8.0.7.nupkg.sha512",
@@ -18,6 +19,7 @@
     "/Users/eloy/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.7/microsoft.entityframeworkcore.abstractions.8.0.7.nupkg.sha512",
     "/Users/eloy/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.7/microsoft.entityframeworkcore.analyzers.8.0.7.nupkg.sha512",
     "/Users/eloy/.nuget/packages/microsoft.entityframeworkcore.design/8.0.7/microsoft.entityframeworkcore.design.8.0.7.nupkg.sha512",
+    "/Users/eloy/.nuget/packages/microsoft.entityframeworkcore.proxies/8.0.7/microsoft.entityframeworkcore.proxies.8.0.7.nupkg.sha512",
     "/Users/eloy/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.7/microsoft.entityframeworkcore.relational.8.0.7.nupkg.sha512",
     "/Users/eloy/.nuget/packages/microsoft.entityframeworkcore.tools/8.0.7/microsoft.entityframeworkcore.tools.8.0.7.nupkg.sha512",
     "/Users/eloy/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
@@ -76,6 +78,7 @@
     "/Users/eloy/.nuget/packages/system.console/4.3.0/system.console.4.3.0.nupkg.sha512",
     "/Users/eloy/.nuget/packages/system.diagnostics.debug/4.3.0/system.diagnostics.debug.4.3.0.nupkg.sha512",
     "/Users/eloy/.nuget/packages/system.diagnostics.diagnosticsource/4.3.0/system.diagnostics.diagnosticsource.4.3.0.nupkg.sha512",
+    "/Users/eloy/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512",
     "/Users/eloy/.nuget/packages/system.diagnostics.tools/4.3.0/system.diagnostics.tools.4.3.0.nupkg.sha512",
     "/Users/eloy/.nuget/packages/system.diagnostics.tracing/4.3.0/system.diagnostics.tracing.4.3.0.nupkg.sha512",
     "/Users/eloy/.nuget/packages/system.globalization/4.3.0/system.globalization.4.3.0.nupkg.sha512",

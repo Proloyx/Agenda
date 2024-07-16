@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Agenda.Data;
 
@@ -20,6 +21,6 @@ public partial class Workcenter
     public virtual ICollection<Paymentdate> Paymentdates { get; set; } = new List<Paymentdate>();
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-
+    [JsonIgnore]
     public virtual User? User { get; set; }
 }

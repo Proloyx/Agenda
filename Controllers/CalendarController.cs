@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Agenda.Services;
 using Agenda.Models.CalendarModels;
+using System.Text.Json;
+using System.Security.Claims;
 
 namespace Agenda.Controllers;
 
@@ -15,7 +17,6 @@ public class CalendarController : Controller
 {
     //private readonly ILogger<CalendarController> _logger;
     private readonly AppDbContext _context;
-
     public CalendarController(/*ILogger<CalendarController> logger,*/ AppDbContext context)
     {
         //_logger = logger;
@@ -24,12 +25,19 @@ public class CalendarController : Controller
 
     public IActionResult Index()
     {
-        return View(new DateModel());
+        var calendar =new Calendar{ 
+            Date = DateOnly.FromDateTime(DateTime.Now), 
+            User = JsonSerializer.Deserialize<User>(User.FindFirstValue("user"))
+            }; 
+        return View(calendar);
     }
 
     public IActionResult UpdateCalendar(DateSubmit dateSubmit) {
-        var date = new DateModel{ Date = new DateOnly(dateSubmit.Years, dateSubmit.Months, 1)};
-        return View("index", date);
+        var calendar = new Calendar{ 
+            Date = new DateOnly(dateSubmit.Years, dateSubmit.Months, 1),
+            User = JsonSerializer.Deserialize<User>(User.FindFirstValue("user"))
+            };
+        return View("index", calendar);
         //return PartialView("_CalendarPartial", date);
     }
 }

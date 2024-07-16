@@ -3,6 +3,8 @@ using Agenda.Data;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 Env.Load();
 
@@ -11,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Env.GetString("DbConnection")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(Env.GetString("DbConnection")));
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
