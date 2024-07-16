@@ -18,6 +18,7 @@
   <title>@ViewData["Title"] - Agenda</title>
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+  @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -39,7 +40,10 @@
                   <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
                   <a asp-area="" asp-controller="Home" asp-action="Index"
                     class="bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium"
-                    aria-current="page">Dashboard</a>
+                    aria-current="page">Home</a>
+                  <a asp-area="" asp-controller="Calendar" asp-action="Index"
+                    class="bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium"
+                    aria-current="page">Calendar</a>
                 </div>
               </div>
 
@@ -120,7 +124,9 @@
           <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
             <a asp-action="Index" asp-controller="Home" class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
-              aria-current="page">Dashboard</a>
+              aria-current="page">Home</a>
+            <a asp-action="Index" asp-controller="Calendar" class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+              aria-current="page">Calendar</a>
           </div>
           <div class="border-t border-indigo-700 pb-3 pt-4">
             <div class="flex items-center px-5">

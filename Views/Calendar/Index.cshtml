@@ -1,59 +1,60 @@
-﻿@{
-  ViewData["Title"] = "Home Page";
+﻿@model Agenda.Models.CalendarModels.DateModel
+@{var date = Model.Date;
+  var firstday = new DateOnly(date.Year,date.Month,1);
+  var weekday = firstday.DayOfWeek;
+  var daysinmonth = DateTime.DaysInMonth(date.Year,date.Month);
+  ViewData["Title"] = "Calendar Page";
+  var startday = ((int)DayOfWeek.Saturday - (int)firstday.DayOfWeek) - 6;
+  var x =(int)DayOfWeek.Sunday;
 }
+
 <div class="p-12">
   <div class="lg:flex lg:h-full lg:flex-col">
     <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
       <h1 class="text-base font-semibold leading-6 text-gray-900">
-        <time datetime="2022-01">January 2022</time>
+        <time datetime="@date.ToString("yyyy-MM-dd")">@date.ToString("MMMM")</time>
       </h1>
       <div class="flex items-center">
-        <div class="relative flex items-center rounded-md bg-white shadow-sm md:items-stretch">
-          <div class="pointer-events-none absolute inset-0 rounded-md ring-1 ring-inset ring-gray-300" aria-hidden="true"></div>
-          <button type="button" class="flex items-center justify-center rounded-l-md py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-            <span class="sr-only">Previous month</span>
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
-            </svg>
-          </button>
-          <button type="button" class="hidden px-3.5 text-sm font-semibold text-gray-900 hover:bg-gray-50 focus:relative md:block">Today</button>
-          <span class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"></span>
-          <button type="button" class="flex items-center justify-center rounded-r-md py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-            <span class="sr-only">Next month</span>
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-            </svg>
-          </button>
-        </div>
-        <div class="hidden md:ml-4 md:flex md:items-center">
-          <div class="relative">
-            <button type="button" class="flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="false" aria-haspopup="true">
-              Month view
-              <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+        <form class="flex items-center id="calendarForm" asp-action="UpdateCalendar" asp-controller="Calendar">
+          <div class="w-auto max-w-xs">
+            <select id="months" name="months" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option value="1">Enero</option>
+              <option value="2">Febrero</option>
+              <option value="3">Marzo</option>
+              <option value="4">Abril</option>
+              <option value="5">Mayo</option>
+              <option value="6">Junio</option>
+              <option value="7">Julio</option>
+              <option value="8">Agosto</option>
+              <option value="9">Septiembre</option>
+              <option value="10">Octubre</option>
+              <option value="11">Noviembre</option>
+              <option value="12">Diciembre</option>
+            </select>
+          </div>
+          <div class="w-auto max-w-xs mx-2">
+            <select id="years" name="years" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+              <option value="2030">2030</option>
+            </select>
+          </div>
+          <div class="flex items-center">
+            <button type="submit" class=" rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
               </svg>
             </button>
-
-            <!--
-              Dropdown menu, show/hide based on menu state.
-
-              Entering: "transition ease-out duration-100"
-                From: "transform opacity-0 scale-95"
-                To: "transform opacity-100 scale-100"
-              Leaving: "transition ease-in duration-75"
-                From: "transform opacity-100 scale-100"
-                To: "transform opacity-0 scale-95"
-            -->
-            <div class="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-              <div class="py-1" role="none">
-                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Day view</a>
-                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Week view</a>
-                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2">Month view</a>
-                <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Year view</a>
-              </div>
-            </div>
           </div>
+        </form>
+        @* <div id="calendarContent" class="mt-6">
+          @Html.Partial("_CalendarPartial", Model)
+        </div> *@
+        <div class="hidden md:ml-4 md:flex md:items-center">
           <div class="ml-6 h-6 w-px bg-gray-300"></div>
           <button type="button" class="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add event</button>
         </div>
@@ -64,255 +65,54 @@
               <path d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
             </svg>
           </button>
-
-          <!--
-            Dropdown menu, show/hide based on menu state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
-          <div class="absolute right-0 z-10 mt-3 w-36 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-0-button" tabindex="-1">
-            <div class="py-1" role="none">
-              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-              <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-0">Create event</a>
-            </div>
-            <div class="py-1" role="none">
-              <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-1">Go to today</a>
-            </div>
-            <div class="py-1" role="none">
-              <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-2">Day view</a>
-              <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-3">Week view</a>
-              <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-4">Month view</a>
-              <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-0-item-5">Year view</a>
-            </div>
-          </div>
         </div>
       </div>
     </header>
     <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
       <div class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
         <div class="flex justify-center bg-white py-2">
-          <span>M</span>
-          <span class="sr-only sm:not-sr-only">on</span>
+          <span class="sr-only sm:not-sr-only">Sunday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
-          <span>T</span>
-          <span class="sr-only sm:not-sr-only">ue</span>
+          <span class="sr-only sm:not-sr-only">Monday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
-          <span>W</span>
-          <span class="sr-only sm:not-sr-only">ed</span>
+          <span class="sr-only sm:not-sr-only">Tuesday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
-          <span>T</span>
-          <span class="sr-only sm:not-sr-only">hu</span>
+          <span class="sr-only sm:not-sr-only">Wednesday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
-          <span>F</span>
-          <span class="sr-only sm:not-sr-only">ri</span>
+          <span class="sr-only sm:not-sr-only">Thursday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
-          <span>S</span>
-          <span class="sr-only sm:not-sr-only">at</span>
+          <span class="sr-only sm:not-sr-only">Friday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
-          <span>S</span>
-          <span class="sr-only sm:not-sr-only">un</span>
+          <span class="sr-only sm:not-sr-only">Saturday</span>
         </div>
       </div>
-      <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-        <div class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+      <div class="flex bg-gray-100 text-xs leading-6 text-gray-700 lg:flex-auto">
+        <div class=" w-full lg:grid lg:grid-cols-7 lg:gap-px">
+          @for (int i = startday; i < daysinmonth; i++)
+          {
+            if (i < 0){
+              <div class="relative bg-gray-100 px-3 py-2">
+              </div>
+            } else {
+              <div class="relative bg-white px-3 py-2">
+                <time datetime="@firstday.AddDays(i).ToString("yyyy-MM-dd")">@firstday.AddDays(i).ToString("dd")</time>
+              </div>
+            }
+            
+          }
+        </div>
+        
           <!--
             Always include: "relative py-2 px-3"
             Is current month, include: "bg-white"
             Is not current month, include: "bg-gray-50 text-gray-500"
           -->
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <!--
-              Is today, include: "flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white"
-            -->
-            <time datetime="2021-12-27">27</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2021-12-28">28</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2021-12-29">29</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2021-12-30">30</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2021-12-31">31</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-01">1</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-01">2</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-03">3</time>
-            <ol class="mt-2">
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Design review</p>
-                  <time datetime="2022-01-03T10:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">10AM</time>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Sales meeting</p>
-                  <time datetime="2022-01-03T14:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">2PM</time>
-                </a>
-              </li>
-            </ol>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-04">4</time>
-          </div>
-          <div class="relative bg-red-500 px-3 py-2">
-            <time datetime="2022-01-05">5</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-06">6</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-07">7</time>
-            <ol class="mt-2">
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Date night</p>
-                  <time datetime="2022-01-08T18:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">6PM</time>
-                </a>
-              </li>
-            </ol>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-08">8</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-09">9</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-10">10</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-11">11</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-12" class="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white">12</time>
-            <ol class="mt-2">
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Sam's birthday party</p>
-                  <time datetime="2022-01-25T14:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">2PM</time>
-                </a>
-              </li>
-            </ol>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-13">13</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-14">14</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-15">15</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-16">16</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-17">17</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-18">18</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-19">19</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-20">20</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-21">21</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-22">22</time>
-            <ol class="mt-2">
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Maple syrup museum</p>
-                  <time datetime="2022-01-22T15:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">3PM</time>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Hockey game</p>
-                  <time datetime="2022-01-22T19:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">7PM</time>
-                </a>
-              </li>
-            </ol>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-23">23</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-24">24</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-25">25</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-26">26</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-27">27</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-28">28</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-29">29</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-30">30</time>
-          </div>
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-31">31</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2022-02-01">1</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2022-02-02">2</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2022-02-03">3</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2022-02-04">4</time>
-            <ol class="mt-2">
-              <li>
-                <a href="#" class="group flex">
-                  <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">Cinema with friends</p>
-                  <time datetime="2022-02-04T21:00" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">9PM</time>
-                </a>
-              </li>
-            </ol>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2022-02-05">5</time>
-          </div>
-          <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-            <time datetime="2022-02-06">6</time>
-          </div>
-        </div>
         <div class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
           <!--
             Always include: "flex h-14 flex-col py-2 px-3 hover:bg-gray-100 focus:z-10"
@@ -548,3 +348,25 @@
     </div>
   </div>
 </div>
+@* <script>
+    $(document).ready(function() {
+        $('#calendarForm').submit(function(event) {
+            event.preventDefault(); // Evita el envío normal del formulario
+
+            var months = $('#months').val();
+            var years = $('#years').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateCalendar", "Calendar")',
+                data: { Months: months, Years: years },
+                success: function(response) {
+                    $('#calendarContent').html(response); // Actualiza el contenido del calendario
+                },
+                error: function() {
+                    alert('Hubo un error al actualizar el calendario.');
+                }
+            });
+        });
+    });
+</script> *@
