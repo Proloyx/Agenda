@@ -8,6 +8,7 @@ using Agenda.Services;
 using Agenda.Models.CalendarModels;
 using System.Text.Json;
 using System.Security.Claims;
+using Agenda.Interfaces;
 
 namespace Agenda.Controllers;
 
@@ -15,19 +16,17 @@ namespace Agenda.Controllers;
 [TypeFilter(typeof(ValidateUserFilter))]
 public class CalendarController : Controller
 {
-    //private readonly ILogger<CalendarController> _logger;
-    private readonly AppDbContext _context;
-    public CalendarController(/*ILogger<CalendarController> logger,*/ AppDbContext context)
+    private readonly ICookieService _cookieService;
+    public CalendarController(ICookieService cookieService)
     {
-        //_logger = logger;
-        _context = context;
+        _cookieService = cookieService;
     }
 
     public IActionResult Index()
     {
         var calendar =new Calendar{ 
             Date = DateOnly.FromDateTime(DateTime.Now), 
-            User = JsonSerializer.Deserialize<User>(User.FindFirstValue("user"))
+            User = _cookieService.GetUser()
             }; 
         return View(calendar);
     }
@@ -35,7 +34,7 @@ public class CalendarController : Controller
     public IActionResult UpdateCalendar(DateSubmit dateSubmit) {
         var calendar = new Calendar{ 
             Date = new DateOnly(dateSubmit.Years, dateSubmit.Months, 1),
-            User = JsonSerializer.Deserialize<User>(User.FindFirstValue("user"))
+            User = _cookieService.GetUser()
             };
         return View("index", calendar);
         //return PartialView("_CalendarPartial", date);

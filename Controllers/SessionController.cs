@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Agenda.Data;
+using Agenda.Interfaces;
 using Agenda.Models.UserModels;
 using AutoMapper;
 using DotNetEnv;

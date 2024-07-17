@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Agenda.Interfaces;
+using Agenda.Services;
 
 Env.Load();
 
@@ -25,8 +27,9 @@ builder.Services.AddAuthentication(
         option.Cookie.Name = "Agenda-Auth";
     });
 
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+builder.Services.AddSingleton<ICookieService,CookieService>();
 
 var app = builder.Build();
 

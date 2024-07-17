@@ -51,13 +51,11 @@
         </div>
       </form>
       @if (ViewData.ModelState.IsValid == false)
-                {
-                    <div class="mb-4 mt-2 text-center">
-                        <p class="text-red-500 text-sm">@Html.ValidationSummary(false, "", new { @class = "text-sm text-red-500" })</p>
-                    </div>
-                }
-      
-      
+        {
+            <div class="mb-4 mt-2 text-center">
+                <p class="text-red-500 text-sm">@Html.ValidationSummary(false, "", new { @class = "text-sm text-red-500" })</p>
+            </div>
+        }
     </div>
   </div>
 </div>
