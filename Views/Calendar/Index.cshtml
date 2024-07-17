@@ -3,13 +3,14 @@
   ViewData["Title"] = "Calendar Page";
   
   var date = Model.Date;
+  var schedules = Model.User.Schedules;
+
   var firstday = new DateOnly(date.Year,date.Month,1);
   var weekday = firstday.DayOfWeek;
   var daysinmonth = DateTime.DaysInMonth(date.Year,date.Month);
   var startday = ((int)DayOfWeek.Saturday - (int)firstday.DayOfWeek) - 6;
+
   var Pruebas =(int)DayOfWeek.Sunday;
-  var fechas = Model.User.Schedules;
-  Console.WriteLine(fechas.Count);
 }
 
 <div class="p-12">
@@ -104,20 +105,24 @@
               <div class="relative bg-gray-100 px-3 py-2">
               </div>
             } else {
-              var datenow = @firstday.AddDays(i);
+              var datenow = firstday.AddDays(i);
+              var schedule = schedules.FirstOrDefault( f => f.Workdate == datenow);
 
-              <div class="relative bg-white px-3 py-2">
+              @if( schedule != null){ 
+              <a asp-action="Index" asp-controller="Session" class="relative bg-yellow-100 px-3 py-2 hover:cursor-pointer">
                 <time datetime="@datenow">@datenow.ToString("dd")</time>
                 <ol>
                   <li>
-                    @if(fechas.FirstOrDefault( f => f.Workdate == datenow) != null){ 
-                      <div>aki</div>
-                    } else {
-                      <div></div>
-                    }
-                  </li>
+                      <div class="text-right text-red-600">@schedule.Starttime</div>
+                      <div class="text-right text-red-600">@schedule.Endtime</div>
+                   </li>
                 </ol>
-              </div>
+              </a>}
+              else {
+                <div class="relative bg-white px-3 py-2">
+                  <time datetime="@datenow">@datenow.ToString("dd")</time>
+                </div>
+              }
             }
             
           }

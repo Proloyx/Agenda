@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Agenda.Data;
 using Agenda.Models.UserModels;
+using AutoMapper;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -24,11 +25,13 @@ namespace Agenda.Controllers
     {
         private readonly ILogger<SessionController> _logger;
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public SessionController(ILogger<SessionController> logger, AppDbContext context)
+        public SessionController(ILogger<SessionController> logger, AppDbContext context, IMapper mapper)
         {
             _logger = logger;
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -59,7 +62,7 @@ namespace Agenda.Controllers
                 ClaimsPrincipal cp = new ClaimsPrincipal (ci);
                 await HttpContext.SignInAsync(cp, new AuthenticationProperties{IsPersistent=true});
                 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
             catch (Exception e)
             {
@@ -70,6 +73,29 @@ namespace Agenda.Controllers
         public async Task<IActionResult> Logout(){
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Register(){
+            return View();
+        }
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterUser(UserRegister user){
+            try
+            {
+                var email = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+                if (user != null) {
+                    ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese correo.");
+                    return View("Register");
+                }
+                var newuser = _mapper.Map<User>(user);
+                await _context.Users.AddAsync(newuser);
+                await _context.SaveChangesAsync();
+                return View("Index");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);;
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
