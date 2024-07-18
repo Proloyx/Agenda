@@ -10,7 +10,7 @@
       <h1 class="text-base font-semibold leading-6 text-gray-900">WorkCenter</h1>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</button>
+      <a asp-action="Create" asp-controller="WorkCenter" type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add user</a>
     </div>
   </div>
   <div class="-mx-4 mt-8 sm:-mx-0">
@@ -41,7 +41,10 @@
           <td class="px-3 py-4 text-sm text-gray-500">@Html.DisplayFor(modelItem => item.Netrate)</td>
           <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
             <a asp-action="Edit" asp-controller="WorkCenter" asp-route-id="@item.Centerid" class="text-amber-700 hover:text-amber-900">Edit</a> |
-            <a asp-action="Delete" asp-controller="WorkCenter" asp-route-id="@item.Centerid" class="text-red-700 hover:text-red-900">Delete</a>
+            <form asp-action="Delete" method="post" asp-route-id="@item.Centerid">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="text-red-700 hover:text-red-900">Delete</button>
+            </form>
           </td>
         </tr>
     }

@@ -1,6 +1,7 @@
 using System.Net.NetworkInformation;
 using Agenda.Data;
 using Agenda.Models.UserModels;
+using Agenda.Models.WorkCenterModels;
 using AutoMapper;
 
 namespace Agenda.Models
@@ -9,6 +10,7 @@ namespace Agenda.Models
     {
         public AutoMapperProfile(){
             CreateMap<UserRegister,User>();
+            CreateMap<WorkCenterCreate,Workcenter>();
         }
     }
 }

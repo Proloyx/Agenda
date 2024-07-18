@@ -12,6 +12,7 @@
         </div>
       </div>
       <form class="space-y-6" asp-action="Login" asp-controller="Session">
+        @Html.AntiForgeryToken()
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
           <div class="mt-2">
