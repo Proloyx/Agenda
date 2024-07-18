@@ -54,6 +54,46 @@ namespace Agenda.Controllers
             return View(workCenter);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Workcenters == null)
+            {
+                return NotFound();
+            }
+
+            var workcenter = await _context.Workcenters.FindAsync(id);
+            if (workcenter == null)
+            {
+                return NotFound();
+            }
+            
+            return View(_mapper.Map<WorkCenterCreate>(workcenter));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Address,Grossrate,Netrate")] WorkCenterCreate workCenter)
+        {
+            var center = await _context.Workcenters.FirstOrDefaultAsync(w => w.Centerid == id);
+            if (center == null)
+            {
+                return NotFound();
+            }
+
+            center.Name = workCenter.Name;
+            center.Address = workCenter.Address;
+            center.Grossrate = workCenter.Grossrate;
+            center.Netrate = workCenter.Netrate;
+
+            if (ModelState.IsValid)
+            {
+                _context.Workcenters.Update(center);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(center);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
@@ -62,11 +102,9 @@ namespace Agenda.Controllers
             if (workcenter != null)
             {
                 _context.Workcenters.Remove(workcenter);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(string.Empty, "No se pudo eliminar el usuario");
-            return View("Index");
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
