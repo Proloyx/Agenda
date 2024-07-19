@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Agenda.Data;
+namespace Agenda.Models.ScheduleModels;
 
-public partial class Schedule
+public partial class ScheduleCreate
 {
-    public int Scheduleid { get; set; }
 
     public int? Userid { get; set; }
 
@@ -17,12 +17,8 @@ public partial class Schedule
     public TimeOnly Starttime { get; set; }
 
     public TimeOnly Endtime { get; set; }
-
+    [Range(1, 10, ErrorMessage = "Paymentday must be a number between 1 and 10.")]
     public int Workedhours { get; set; }
 
     public string? Description { get; set; }
-    [JsonIgnore]
-    public virtual Workcenter? Center { get; set; }
-    [JsonIgnore]
-    public virtual User? User { get; set; }
 }

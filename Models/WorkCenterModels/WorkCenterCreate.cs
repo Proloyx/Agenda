@@ -12,6 +12,8 @@ namespace Agenda.Models.WorkCenterModels
         public string Name { get; set; } = null!;
         public string? Address { get; set; }
         public decimal Grossrate { get; set; }
+        [Range(1, 31, ErrorMessage = "Paymentday must be a number between 1 and 31.")]
+        public int? Paymentday { get; set; }
         public decimal Netrate { get; set; }
     }
 }

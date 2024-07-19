@@ -16,9 +16,9 @@ public partial class Workcenter
 
     public decimal Grossrate { get; set; }
 
-    public decimal Netrate { get; set; }
+    public int? Paymentday { get; set; }
 
-    public virtual ICollection<Paymentdate> Paymentdates { get; set; } = new List<Paymentdate>();
+    public decimal Netrate { get; set; }
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     [JsonIgnore]

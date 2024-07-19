@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Agenda.Data;
 using Agenda.Interfaces;
+using Agenda.Models.ScheduleModels;
 using Agenda.Models.WorkCenterModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +14,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Agenda.Controllers
 {
-    public class WorkCenterController : Controller
+    public class ScheduleController : Controller
     {
         private readonly IMapper _mapper;
         private readonly AppDbContext _context;
         private readonly ICookieService _cookieService;
         private readonly User user;
 
-        public WorkCenterController(IMapper mapper,AppDbContext context , ICookieService cookieService)
+        public ScheduleController(IMapper mapper,AppDbContext context , ICookieService cookieService)
         {
             _mapper = mapper;
             _context = context;
@@ -30,9 +31,9 @@ namespace Agenda.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var workcenters = _context.Workcenters.Where(w => w.Userid == user.Userid);
-            return workcenters != null ? 
-                        View(await workcenters.ToListAsync()) :
+            var schedules = _context.Schedules.Where(u => u.Userid == user.Userid);
+            return schedules != null ? 
+                        View(await schedules.ToListAsync()) :
                         Problem("Entity set 'SiscomContext.RangoFirmas'  is null.");
         }
 
@@ -43,66 +44,67 @@ namespace Agenda.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Address,Grossrate,Paymentday,Netrate")] WorkCenterCreate workCenter)
+        public async Task<IActionResult> Create(int? id, [Bind("Workdate,Starttime,Endtime,Workedhours,Description")] ScheduleCreate schedule)
         {
             if (ModelState.IsValid){
-                workCenter.Userid = user.Userid;
-                await _context.AddAsync(_mapper.Map<Workcenter>(workCenter));
+                schedule.Userid = user.Userid;
+                schedule.Centerid = id;
+                await _context.AddAsync(_mapper.Map<Schedule>(schedule));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
                 }
-            return View(workCenter);
+            return View(schedule);
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Workcenters == null)
+            if (id == null || _context.Schedules == null)
             {
                 return NotFound();
             }
 
-            var workcenter = await _context.Workcenters.FindAsync(id);
-            if (workcenter == null)
+            var schedule = await _context.Schedules.FindAsync(id);
+            if (schedule == null)
             {
                 return NotFound();
             }
             
-            return View(_mapper.Map<WorkCenterCreate>(workcenter));
+            return View(_mapper.Map<ScheduleCreate>(schedule));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Address,Grossrate,Paymentday,Netrate")] WorkCenterCreate workCenter)
+        public async Task<IActionResult> Edit(int id, [Bind("Workdate,Starttime,Endtime,Workedhours,Description")] ScheduleCreate scheduleCreate)
         {
-            var center = await _context.Workcenters.FirstOrDefaultAsync(w => w.Centerid == id);
-            if (center == null)
+            var schedule = await _context.Schedules.FirstOrDefaultAsync(w => w.Scheduleid == id);
+            if (schedule == null)
             {
                 return NotFound();
             }
 
-            center.Name = workCenter.Name;
-            center.Address = workCenter.Address;
-            center.Grossrate = workCenter.Grossrate;
-            center.Paymentday = workCenter.Paymentday;
-            center.Netrate = workCenter.Netrate;
+            schedule.Workdate = scheduleCreate.Workdate;
+            schedule.Starttime = scheduleCreate.Starttime;
+            schedule.Endtime = scheduleCreate.Endtime;
+            schedule.Workedhours = scheduleCreate.Workedhours;
+            schedule.Description = scheduleCreate.Description;
 
             if (ModelState.IsValid)
             {
-                _context.Workcenters.Update(center);
+                _context.Schedules.Update(schedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(center);
+            return View(schedule);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var workcenter = await _context.Workcenters.FindAsync(id);
-            if (workcenter != null)
+            var schedule = await _context.Schedules.FindAsync(id);
+            if (schedule != null)
             {
-                _context.Workcenters.Remove(workcenter);
+                _context.Schedules.Remove(schedule);
             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

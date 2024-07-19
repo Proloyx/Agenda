@@ -17,24 +17,28 @@ namespace Agenda.Controllers;
 public class CalendarController : Controller
 {
     private readonly ICookieService _cookieService;
-    public CalendarController(ICookieService cookieService)
+    private readonly AppDbContext _context;
+    public CalendarController(ICookieService cookieService, AppDbContext context)
     {
         _cookieService = cookieService;
+        _context = context;
     }
 
     public IActionResult Index()
     {
+        var user = _context.Users.FirstOrDefault(s => s.Userid == _cookieService.GetUser().Userid);
         var calendar =new Calendar{ 
             Date = DateOnly.FromDateTime(DateTime.Now), 
-            User = _cookieService.GetUser()
+            User = user
             }; 
         return View(calendar);
     }
 
     public IActionResult UpdateCalendar(DateSubmit dateSubmit) {
+        var user = _context.Users.FirstOrDefault(s => s.Userid == _cookieService.GetUser().Userid);
         var calendar = new Calendar{ 
             Date = new DateOnly(dateSubmit.Years, dateSubmit.Months, 1),
-            User = _cookieService.GetUser()
+            User = user
             };
         return View("index", calendar);
         //return PartialView("_CalendarPartial", date);

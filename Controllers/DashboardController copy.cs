@@ -5,6 +5,7 @@ using Agenda.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Agenda.Services;
+using Agenda.Models.DashboardModels;
 
 namespace Agenda.Controllers;
 
@@ -23,7 +24,17 @@ public class DashboardController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var date = DateOnly.FromDateTime(DateTime.Now);
+        var schedules = _context.Schedules.Where(s => s.Workdate.Month == date.Month && s.Workdate.Year == date.Year);
+        decimal sum = 0;
+        foreach (var item in schedules)
+        {
+            sum += item.Center.Netrate * item.Workedhours;
+        }
+        Dashboard dash = new Dashboard{
+            Total = sum
+        }; 
+        return View(dash);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

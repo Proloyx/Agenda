@@ -1,4 +1,4 @@
-﻿@model Agenda.Models.WorkCenterModels.WorkCenterCreate
+﻿@model Agenda.Models.ScheduleModels.ScheduleCreate
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,40 +13,38 @@
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div class="sm:col-span-3">
-          <label asp-for="Name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+          <label asp-for="Workdate" class="block text-sm font-medium leading-6 text-gray-900">Workdate</label>
           <div class="mt-2">
-            <input asp-for="Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <input type="date" asp-for="Workdate" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Address" class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+          <label asp-for="Starttime" class="block text-sm font-medium leading-6 text-gray-900">Starttime</label>
           <div class="mt-2">
-            <input asp-for="Address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <input type="time" asp-for="Starttime" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Grossrate" class="block text-sm font-medium leading-6 text-gray-900">Grossrate</label>
+          <label asp-for="Endtime" class="block text-sm font-medium leading-6 text-gray-900">Endtime</label>
           <div class="mt-2">
-            <input asp-for="Grossrate" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            <span asp-validation-for="Grossrate" class="text-red-500"></span>
+            <input type="time" asp-for="Endtime" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Paymentday" class="block text-sm font-medium leading-6 text-gray-900">Paymentday</label>
+          <label asp-for="Workedhours" class="block text-sm font-medium leading-6 text-gray-900">Workedhours</label>
           <div class="mt-2">
-            <input type="number" asp-for="Paymentday" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            <span asp-validation-for="Paymentday" class="text-red-500"></span>
+            <input type="number" asp-for="Workedhours" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <span asp-validation-for="Workedhours" class="text-red-500"></span>
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Netrate" class="block text-sm font-medium leading-6 text-gray-900">Netrate</label>
+          <label asp-for="Description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
           <div class="mt-2">
-            <input asp-for="Netrate" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            <span asp-validation-for="Netrate" class="text-red-500"></span>
+            <input type="text" asp-for="Description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
