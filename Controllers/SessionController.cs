@@ -84,7 +84,7 @@ namespace Agenda.Controllers
             try
             {
                 var email = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-                if (user != null) {
+                if (email != null) {
                     ModelState.AddModelError(string.Empty, "Ya existe un usuario con ese correo.");
                     return View("Register");
                 }
