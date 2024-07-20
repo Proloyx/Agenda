@@ -1,16 +1,16 @@
 ﻿@model Agenda.Models.CalendarModels.Calendar
 @{
   ViewData["Title"] = "Calendar Page";
-  
+
   var date = Model.Date;
   var schedules = Model.User.Workcenters.SelectMany(w => w.Schedules);
 
-  var firstday = new DateOnly(date.Year,date.Month,1);
+  var firstday = new DateOnly(date.Year, date.Month, 1);
   var weekday = firstday.DayOfWeek;
-  var daysinmonth = DateTime.DaysInMonth(date.Year,date.Month);
+  var daysinmonth = DateTime.DaysInMonth(date.Year, date.Month);
   var startday = ((int)DayOfWeek.Saturday - (int)firstday.DayOfWeek) - 6;
 
-  var Pruebas =(int)DayOfWeek.Sunday;
+  var Pruebas = (int)DayOfWeek.Sunday;
 }
 
 <div class="p-12">
@@ -20,9 +20,10 @@
         <time datetime="@date.ToString("yyyy-MM-dd")">@date.ToString("MMMM")</time>
       </h1>
       <div class="flex items-center">
-        <form class="flex items-center id="calendarForm" asp-action="UpdateCalendar" asp-controller="Calendar">
+        <form class="flex items-center" id="calendarForm" asp-action="UpdateCalendar" asp-controller="Calendar">
           <div class="w-auto max-w-xs">
-            <select id="months" name="months" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <select id="months" name="months"
+              class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
               <option value="1">Enero</option>
               <option value="2">Febrero</option>
               <option value="3">Marzo</option>
@@ -38,7 +39,8 @@
             </select>
           </div>
           <div class="w-auto max-w-xs mx-2">
-            <select id="years" name="years" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <select id="years" name="years"
+              class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
               <option value="2024">2024</option>
               <option value="2025">2025</option>
               <option value="2026">2026</option>
@@ -49,96 +51,122 @@
             </select>
           </div>
           <div class="flex items-center">
-            <button type="submit" class=" rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+            <button type="submit"
+              class=" rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
               <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                <path fill-rule="evenodd"
+                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                  clip-rule="evenodd" />
               </svg>
             </button>
           </div>
         </form>
         @* <div id="calendarContent" class="mt-6">
-          @Html.Partial("_CalendarPartial", Model)
+        @Html.Partial("_CalendarPartial", Model)
         </div> *@
         <div class="hidden md:ml-4 md:flex md:items-center">
           <div class="ml-6 h-6 w-px bg-gray-300"></div>
-          <a asp-action="Index" asp-controller="WorkCenter" class="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add event</a>
+          <a asp-action="Index" asp-controller="WorkCenter"
+            class="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add
+            event</a>
         </div>
         <div class="relative ml-6 md:hidden">
-          <button type="button" class="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
+          <button type="button"
+            class="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500"
+            id="menu-0-button" aria-expanded="false" aria-haspopup="true">
             <span class="sr-only">Open menu</span>
             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+              <path
+                d="M3 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM8.5 10a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM15.5 8.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
             </svg>
           </button>
         </div>
       </div>
     </header>
-    <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
-      <div class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
+    <div class=" shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
+      <div
+        class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">S</span>
           <span class="sr-only sm:not-sr-only">Sunday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">M</span>
           <span class="sr-only sm:not-sr-only">Monday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">T</span>
           <span class="sr-only sm:not-sr-only">Tuesday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">W</span>
           <span class="sr-only sm:not-sr-only">Wednesday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">T</span>
           <span class="sr-only sm:not-sr-only">Thursday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">F</span>
           <span class="sr-only sm:not-sr-only">Friday</span>
         </div>
         <div class="flex justify-center bg-white py-2">
+          <span class="md:hidden">S</span>
           <span class="sr-only sm:not-sr-only">Saturday</span>
         </div>
       </div>
       <div class="flex bg-gray-100 text-xs leading-6 text-gray-700 lg:flex-auto">
-        <div class=" w-full lg:grid lg:grid-cols-7 lg:gap-px">
+        <div class="hidden w-full lg:grid lg:grid-cols-7 lg:gap-px">
           @for (int i = startday; i < daysinmonth; i++)
           {
-            if (i < 0){
+            if (i < 0)
+            {
               <div class="relative bg-gray-100 px-3 py-2">
               </div>
-            } else {
+            }
+            else
+            {
               var datenow = firstday.AddDays(i);
-              var schedule = schedules.Where( f => f.Workdate == datenow);
+              var schedule = schedules.Where(f => f.Workdate == datenow);
 
-              @if(schedule.Count() > 0){ 
-              <div class="relative bg-yellow-100 px-3 py-2 hover:cursor-pointer">
-                <time datetime="@datenow">@datenow.ToString("dd")</time>
-                <ol>
-                  @foreach (var item in schedule){
-                    <li >
-                      <span class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">@item.Center.Name</span>
-                      <div class="group flex">
-                        <time datetime="@item.Starttime" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@item.Starttime</time>
-                        <time datetime="@item.Endtime" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@item.Endtime</time>
-                      </div>
-                   </li>
-                  }
-                </ol>
-              </div>}
-              else {
+              @if (schedule.Count() > 0)
+              {
+                <div class="relative bg-yellow-100 px-3 py-2 hover:cursor-pointer">
+                  <time datetime="@datenow">@datenow.ToString("dd")</time>
+                  <ol>
+                    @foreach (var item in schedule)
+                    {
+                      <li>
+                        <span
+                          class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">@item.Center.Name</span>
+                        <div class="group flex">
+                          <time datetime="@item.Starttime"
+                            class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@item.Starttime</time>
+                          <time datetime="@item.Endtime"
+                            class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@item.Endtime</time>
+                        </div>
+                      </li>
+                    }
+                  </ol>
+                </div>
+              }
+              else
+              {
                 <div class="relative bg-white px-3 py-2">
                   <time datetime="@datenow">@datenow.ToString("dd")</time>
                 </div>
               }
             }
-            
+
           }
         </div>
-        
-          <!--
+
+        <!--
             Always include: "relative py-2 px-3"
             Is current month, include: "bg-white"
             Is not current month, include: "bg-gray-50 text-gray-500"
           -->
-        <div class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
+        <div class="isolate grid w-full grid-cols-7 gap-px lg:hidden">
           <!--
             Always include: "flex h-14 flex-col py-2 px-3 hover:bg-gray-100 focus:z-10"
             Is current month, include: "bg-white"
@@ -149,249 +177,76 @@
             Is not selected and is current month, and is not today, include: "text-gray-900"
             Is not selected, is not current month, and is not today: "text-gray-500"
           -->
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <!--
-              Always include: "ml-auto"
-              Is selected, include: "flex h-6 w-6 items-center justify-center rounded-full"
-              Is selected and is today, include: "bg-indigo-600"
-              Is selected and is not today, include: "bg-gray-900"
-            -->
-            <time datetime="2021-12-27" class="ml-auto">27</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2021-12-28" class="ml-auto">28</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2021-12-29" class="ml-auto">29</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2021-12-30" class="ml-auto">30</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2021-12-31" class="ml-auto">31</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-01" class="ml-auto">1</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-02" class="ml-auto">2</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-03" class="ml-auto">3</time>
-            <span class="sr-only">2 events</span>
-            <span class="-mx-0.5 mt-auto flex flex-wrap-reverse">
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-            </span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-04" class="ml-auto">4</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-05" class="ml-auto">5</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-06" class="ml-auto">6</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-07" class="ml-auto">7</time>
-            <span class="sr-only">1 event</span>
-            <span class="-mx-0.5 mt-auto flex flex-wrap-reverse">
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-            </span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-08" class="ml-auto">8</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-09" class="ml-auto">9</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-10" class="ml-auto">10</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-11" class="ml-auto">11</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 font-semibold text-indigo-600 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-12" class="ml-auto">12</time>
-            <span class="sr-only">1 event</span>
-            <span class="-mx-0.5 mt-auto flex flex-wrap-reverse">
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-            </span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-13" class="ml-auto">13</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-14" class="ml-auto">14</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-15" class="ml-auto">15</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-16" class="ml-auto">16</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-17" class="ml-auto">17</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-18" class="ml-auto">18</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-19" class="ml-auto">19</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-20" class="ml-auto">20</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-21" class="ml-auto">21</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 font-semibold text-white hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-22" class="ml-auto flex h-6 w-6 items-center justify-center rounded-full bg-gray-900">22</time>
-            <span class="sr-only">2 events</span>
-            <span class="-mx-0.5 mt-auto flex flex-wrap-reverse">
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-            </span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-23" class="ml-auto">23</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-24" class="ml-auto">24</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-25" class="ml-auto">25</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-26" class="ml-auto">26</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-27" class="ml-auto">27</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-28" class="ml-auto">28</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-29" class="ml-auto">29</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-30" class="ml-auto">30</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-white px-3 py-2 text-gray-900 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-01-31" class="ml-auto">31</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-02-01" class="ml-auto">1</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-02-02" class="ml-auto">2</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-02-03" class="ml-auto">3</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-02-04" class="ml-auto">4</time>
-            <span class="sr-only">1 event</span>
-            <span class="-mx-0.5 mt-auto flex flex-wrap-reverse">
-              <span class="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"></span>
-            </span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-02-05" class="ml-auto">5</time>
-            <span class="sr-only">0 events</span>
-          </button>
-          <button type="button" class="flex h-14 flex-col bg-gray-50 px-3 py-2 text-gray-500 hover:bg-gray-100 focus:z-10">
-            <time datetime="2022-02-06" class="ml-auto">6</time>
-            <span class="sr-only">0 events</span>
-          </button>
+          @for (int i = startday; i < daysinmonth; i++)
+          {
+            if (i < 0)
+            {
+              <div class="relative bg-gray-100 px-3 py-2">
+              </div>
+            }
+            else
+            {
+              var datenow = firstday.AddDays(i);
+              var schedule = schedules.Where(f => f.Workdate == datenow);
+
+              @if (schedule.Count() > 0)
+              {
+                <div class="relative bg-yellow-100 px-3 py-2 hover:cursor-pointer">
+                  <time datetime="@datenow">@datenow.ToString("dd")</time>
+                  
+                </div>
+              }
+              else
+              {
+                <div class="relative bg-white px-3 py-2">
+                  <time datetime="@datenow">@datenow.ToString("dd")</time>
+                </div>
+              }
+            }
+          }
         </div>
       </div>
     </div>
-    <div class="px-4 py-10 sm:px-6 lg:hidden">
-      <ol class="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
-        <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
-          <div class="flex-auto">
-            <p class="font-semibold text-gray-900">Maple syrup museum</p>
-            <time datetime="2022-01-15T09:00" class="mt-2 flex items-center text-gray-700">
-              <svg class="mr-2 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
-              </svg>
-              3PM
-            </time>
-          </div>
-          <a href="#" class="ml-6 flex-none self-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 opacity-0 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400 focus:opacity-100 group-hover:opacity-100">Edit<span class="sr-only">, Maple syrup museum</span></a>
-        </li>
-        <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
-          <div class="flex-auto">
-            <p class="font-semibold text-gray-900">Hockey game</p>
-            <time datetime="2022-01-22T19:00" class="mt-2 flex items-center text-gray-700">
-              <svg class="mr-2 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
-              </svg>
-              7PM
-            </time>
-          </div>
-          <a href="#" class="ml-6 flex-none self-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 opacity-0 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400 focus:opacity-100 group-hover:opacity-100">Edit<span class="sr-only">, Hockey game</span></a>
-        </li>
-      </ol>
+    <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow mt-10">
+      <div class="px-4 py-5 sm:px-6 text-center">
+        <!-- Content goes here -->
+        <span class="">Burguer King -</span>
+        <span class="">8 hours</span>
+        <!-- We use less vertical padding on card headers on desktop than on body sections -->
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div>
+          <time datetime="09:00"
+              class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">Schedule: 9:00 AM</time>
+          <time datetime="18:00"
+              class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">6:00 PM</time>
+        </div>
+        <div>
+          <span class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">Description: 9-12 y 1-6</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 @* <script>
-    $(document).ready(function() {
-        $('#calendarForm').submit(function(event) {
-            event.preventDefault(); // Evita el envío normal del formulario
+$(document).ready(function() {
+$('#calendarForm').submit(function(event) {
+event.preventDefault(); // Evita el envío normal del formulario
 
-            var months = $('#months').val();
-            var years = $('#years').val();
+var months = $('#months').val();
+var years = $('#years').val();
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("UpdateCalendar", "Calendar")',
-                data: { Months: months, Years: years },
-                success: function(response) {
-                    $('#calendarContent').html(response); // Actualiza el contenido del calendario
-                },
-                error: function() {
-                    alert('Hubo un error al actualizar el calendario.');
-                }
-            });
-        });
-    });
+$.ajax({
+type: 'POST',
+url: '@Url.Action("UpdateCalendar", "Calendar")',
+data: { Months: months, Years: years },
+success: function(response) {
+$('#calendarContent').html(response); // Actualiza el contenido del calendario
+},
+error: function() {
+alert('Hubo un error al actualizar el calendario.');
+}
+});
+});
+});
 </script> *@
