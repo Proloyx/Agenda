@@ -22,13 +22,12 @@ CREATE TABLE WorkCenters (
 -- Table Schedules
 CREATE TABLE Schedules (
     ScheduleID SERIAL PRIMARY KEY,
-    UserID INT not null REFERENCES Users(UserID),
     CenterID INT not null REFERENCES WorkCenters(CenterID),
     WorkDate DATE NOT NULL,
     StartTime TIME NOT NULL,
     EndTime TIME NOT NULL,
-	WorkedHours int not null,
+    WorkedHours DECIMAL(10, 2) not null,
 	Description varchar (250),
-    CONSTRAINT unique_schedule UNIQUE (UserID, WorkDate, StartTime),
+    CONSTRAINT unique_schedule UNIQUE (CenterID, WorkDate, StartTime),
     CONSTRAINT chk_times CHECK (EndTime > StartTime)  -- Ensure that end time is after start time
 );

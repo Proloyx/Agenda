@@ -3,7 +3,7 @@
   ViewData["Title"] = "Calendar Page";
   
   var date = Model.Date;
-  var schedules = Model.User.Schedules;
+  var schedules = Model.User.Workcenters.SelectMany(w => w.Schedules);
 
   var firstday = new DateOnly(date.Year,date.Month,1);
   var weekday = firstday.DayOfWeek;

@@ -7,9 +7,6 @@ namespace Agenda.Models.ScheduleModels;
 
 public partial class ScheduleCreate
 {
-
-    public int? Userid { get; set; }
-
     public int? Centerid { get; set; }
 
     public DateOnly Workdate { get; set; }
@@ -17,8 +14,8 @@ public partial class ScheduleCreate
     public TimeOnly Starttime { get; set; }
 
     public TimeOnly Endtime { get; set; }
-    [Range(1, 10, ErrorMessage = "Paymentday must be a number between 1 and 10.")]
-    public int Workedhours { get; set; }
+    [Range(1, 12, ErrorMessage = "WorkedHours must be a number between 1 and 12.")]
+    public decimal Workedhours { get; set; }
 
     public string? Description { get; set; }
 }

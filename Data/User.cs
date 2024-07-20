@@ -13,7 +13,5 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-
     public virtual ICollection<Workcenter> Workcenters { get; set; } = new List<Workcenter>();
 }

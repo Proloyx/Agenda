@@ -7,13 +7,14 @@
 <div class="px-4 mt-4 sm:px-6 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      @{
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Schedules</h1>
+      @* @{
         if (Model.Count() == 0){
         <h1 class="text-base font-semibold leading-6 text-gray-900">Not schedules for this work center</h1>
       } else {
         <h1 class="text-base font-semibold leading-6 text-gray-900">Schedule of @Model.ElementAt(0).Center.Name</h1>
       }
-      }
+      } *@
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
       <a asp-action="Index" asp-controller="WorkCenter" type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Schedule</a>
@@ -23,6 +24,7 @@
     <table class="min-w-full divide-y divide-gray-300">
       <thead>
         <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">@Html.DisplayNameFor(model => model.Center.Name)</th>
           <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">@Html.DisplayNameFor(model => model.Workdate)</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">@Html.DisplayNameFor(model => model.Starttime)</th>
           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">@Html.DisplayNameFor(model => model.Endtime)</th>
@@ -36,6 +38,9 @@
       <tbody class="divide-y divide-gray-200 bg-white">
         @foreach (var item in Model) {
         <tr>
+          <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
+            @Html.DisplayFor(modelItem => item.Center.Name)
+          </td>
           <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
             @Html.DisplayFor(modelItem => item.Workdate)
             <dl class="font-normal lg:hidden">
@@ -51,7 +56,7 @@
           <td class="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">@Html.DisplayFor(modelItem => item.Description)</td>
           <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
             <a asp-action="Edit" asp-route-id="@item.Scheduleid" class="text-amber-700 hover:text-amber-900">Edit</a> |
-            <form asp-action="Delete" method="post" asp-route-id="@item.Scheduleid">
+            <form asp-action="Delete" method="post" asp-route-id="@item.Scheduleid" onsubmit="return confirm('Are you sure you want to delete this schedule?')">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="text-red-700 hover:text-red-900">Delete</button> |
             </form>

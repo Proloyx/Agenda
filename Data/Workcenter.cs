@@ -8,7 +8,7 @@ public partial class Workcenter
 {
     public int Centerid { get; set; }
 
-    public int? Userid { get; set; }
+    public int Userid { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -22,5 +22,5 @@ public partial class Workcenter
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     [JsonIgnore]
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; } = null!;
 }

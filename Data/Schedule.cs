@@ -8,9 +8,7 @@ public partial class Schedule
 {
     public int Scheduleid { get; set; }
 
-    public int? Userid { get; set; }
-
-    public int? Centerid { get; set; }
+    public int Centerid { get; set; }
 
     public DateOnly Workdate { get; set; }
 
@@ -18,11 +16,9 @@ public partial class Schedule
 
     public TimeOnly Endtime { get; set; }
 
-    public int Workedhours { get; set; }
+    public decimal Workedhours { get; set; }
 
     public string? Description { get; set; }
     [JsonIgnore]
-    public virtual Workcenter? Center { get; set; }
-    [JsonIgnore]
-    public virtual User? User { get; set; }
+    public virtual Workcenter Center { get; set; } = null!;
 }

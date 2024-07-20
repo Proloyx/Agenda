@@ -31,8 +31,8 @@ namespace Agenda.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var schedules = _context.Schedules.Where(u => u.Userid == user.Userid);
-            return schedules != null ? 
+            var schedules = _context.Workcenters.Where(w => w.Userid == user.Userid ).SelectMany(w => w.Schedules);
+                    return schedules != null ? 
                         View(await schedules.ToListAsync()) :
                         Problem("Entity set 'SiscomContext.RangoFirmas'  is null.");
         }
@@ -47,7 +47,6 @@ namespace Agenda.Controllers
         public async Task<IActionResult> Create(int? id, [Bind("Workdate,Starttime,Endtime,Workedhours,Description")] ScheduleCreate schedule)
         {
             if (ModelState.IsValid){
-                schedule.Userid = user.Userid;
                 schedule.Centerid = id;
                 await _context.AddAsync(_mapper.Map<Schedule>(schedule));
                 await _context.SaveChangesAsync();

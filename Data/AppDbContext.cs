@@ -22,7 +22,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<Workcenter> Workcenters { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-         => optionsBuilder.UseNpgsql();
+        => optionsBuilder.UseNpgsql();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,7 +32,7 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("schedules");
 
-            entity.HasIndex(e => new { e.Userid, e.Workdate, e.Starttime }, "unique_schedule").IsUnique();
+            entity.HasIndex(e => new { e.Centerid, e.Workdate, e.Starttime }, "unique_schedule").IsUnique();
 
             entity.Property(e => e.Scheduleid).HasColumnName("scheduleid");
             entity.Property(e => e.Centerid).HasColumnName("centerid");
@@ -41,17 +41,14 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("description");
             entity.Property(e => e.Endtime).HasColumnName("endtime");
             entity.Property(e => e.Starttime).HasColumnName("starttime");
-            entity.Property(e => e.Userid).HasColumnName("userid");
             entity.Property(e => e.Workdate).HasColumnName("workdate");
-            entity.Property(e => e.Workedhours).HasColumnName("workedhours");
+            entity.Property(e => e.Workedhours).HasColumnName("workedhours")
+                .HasColumnType("decimal(10, 2)");;
 
             entity.HasOne(d => d.Center).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.Centerid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("schedules_centerid_fkey");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Schedules)
-                .HasForeignKey(d => d.Userid)
-                .HasConstraintName("schedules_userid_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -98,7 +95,6 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Workcenters)
                 .HasForeignKey(d => d.Userid)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("workcenters_userid_fkey");
         });
 
