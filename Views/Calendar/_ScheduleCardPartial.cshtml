@@ -1,0 +1,31 @@
+@model Agenda.Data.Schedule
+
+@{
+  if (Model == null)
+  {
+    <div>
+      Clean Day
+    </div>
+  }
+  else
+  {
+    <div class="md:hidden divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow mt-10">
+      <div class="px-4 py-5 sm:px-6 text-center">
+        <!-- Content goes here -->
+        <span id="">@Model.Center.Name -</span>
+        <span class="">@Model.Workedhours</span>
+        <!-- We use less vertical padding on card headers on desktop than on body sections -->
+      </div>
+      <div class="px-4 py-5 sm:p-6">
+        <div>
+          <time datetime="09:00" class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">Schedule: @Model.Starttime
+            </time>
+          <time datetime="18:00" class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@Model.Endtime</time>
+        </div>
+        <div>
+          <span class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">Description: @Model.Description</span>
+        </div>
+      </div>
+    </div>
+  }
+}

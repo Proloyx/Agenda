@@ -1,23 +1,13 @@
 ﻿@model Agenda.Models.CalendarModels.Calendar
 @{
   ViewData["Title"] = "Calendar Page";
-
-  var date = Model.Date;
-  var schedules = Model.User.Workcenters.SelectMany(w => w.Schedules);
-
-  var firstday = new DateOnly(date.Year, date.Month, 1);
-  var weekday = firstday.DayOfWeek;
-  var daysinmonth = DateTime.DaysInMonth(date.Year, date.Month);
-  var startday = ((int)DayOfWeek.Saturday - (int)firstday.DayOfWeek) - 6;
-
-  var Pruebas = (int)DayOfWeek.Sunday;
 }
 
 <div class="p-12">
   <div class="lg:flex lg:h-full lg:flex-col">
     <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
       <h1 class="text-base font-semibold leading-6 text-gray-900">
-        <time datetime="@date.ToString("yyyy-MM-dd")">@date.ToString("MMMM")</time>
+        <time datetime="@Model.Date.ToString("yyyy-MM-dd")">@Model.Date.ToString("MMMM")</time>
       </h1>
       <div class="flex items-center">
         <form class="flex items-center" id="calendarForm" asp-action="UpdateCalendar" asp-controller="Calendar">
@@ -61,16 +51,13 @@
             </button>
           </div>
         </form>
-        @* <div id="calendarContent" class="mt-6">
-        @Html.Partial("_CalendarPartial", Model)
-        </div> *@
         <div class="hidden md:ml-4 md:flex md:items-center">
           <div class="ml-6 h-6 w-px bg-gray-300"></div>
           <a asp-action="Index" asp-controller="WorkCenter"
             class="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add
             event</a>
         </div>
-        <div class="relative ml-6 md:hidden">
+        <div class="hidden relative ml-6 md:hidden">
           <button type="button"
             class="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500"
             id="menu-0-button" aria-expanded="false" aria-haspopup="true">
@@ -83,170 +70,34 @@
         </div>
       </div>
     </header>
-    <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
-      <div
-        class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">S</span>
-          <span class="sr-only sm:not-sr-only">Sunday</span>
-        </div>
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">M</span>
-          <span class="sr-only sm:not-sr-only">Monday</span>
-        </div>
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">T</span>
-          <span class="sr-only sm:not-sr-only">Tuesday</span>
-        </div>
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">W</span>
-          <span class="sr-only sm:not-sr-only">Wednesday</span>
-        </div>
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">T</span>
-          <span class="sr-only sm:not-sr-only">Thursday</span>
-        </div>
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">F</span>
-          <span class="sr-only sm:not-sr-only">Friday</span>
-        </div>
-        <div class="flex justify-center bg-white py-2">
-          <span class="md:hidden">S</span>
-          <span class="sr-only sm:not-sr-only">Saturday</span>
-        </div>
-      </div>
-      <div class="flex bg-gray-100 text-xs leading-6 text-gray-700 lg:flex-auto">
-        <div class="hidden w-full lg:grid lg:grid-cols-7 lg:gap-px">
-          @for (int i = startday; i < daysinmonth; i++)
-          {
-            if (i < 0)
-            {
-              <div class="relative bg-gray-100 px-3 py-2">
-              </div>
-            }
-            else
-            {
-              var datenow = firstday.AddDays(i);
-              var schedule = schedules.Where(f => f.Workdate == datenow);
-
-              @if (schedule.Count() > 0)
-              {
-                <div class="relative bg-yellow-100 px-3 py-2 hover:cursor-pointer">
-                  <time datetime="@datenow">@datenow.ToString("dd")</time>
-                  <ol>
-                    @foreach (var item in schedule)
-                    {
-                      <li>
-                        <span
-                          class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">@item.Center.Name</span>
-                        <div class="group flex">
-                          <time datetime="@item.Starttime"
-                            class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@item.Starttime</time>
-                          <time datetime="@item.Endtime"
-                            class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">@item.Endtime</time>
-                        </div>
-                      </li>
-                    }
-                  </ol>
-                </div>
-              }
-              else
-              {
-                <div class="relative bg-white px-3 py-2">
-                  <time datetime="@datenow">@datenow.ToString("dd")</time>
-                </div>
-              }
-            }
-
-          }
-        </div>
-
-        <!--
-            Always include: "relative py-2 px-3"
-            Is current month, include: "bg-white"
-            Is not current month, include: "bg-gray-50 text-gray-500"
-          -->
-        <div class="isolate grid w-full grid-cols-7 gap-px lg:hidden">
-          <!--
-            Always include: "flex h-14 flex-col py-2 px-3 hover:bg-gray-100 focus:z-10"
-            Is current month, include: "bg-white"
-            Is not current month, include: "bg-gray-50"
-            Is selected or is today, include: "font-semibold"
-            Is selected, include: "text-white"
-            Is not selected and is today, include: "text-indigo-600"
-            Is not selected and is current month, and is not today, include: "text-gray-900"
-            Is not selected, is not current month, and is not today: "text-gray-500"
-          -->
-          @for (int i = startday; i < daysinmonth; i++)
-          {
-            if (i < 0)
-            {
-              <div class="relative bg-gray-100 px-3 py-2">
-              </div>
-            }
-            else
-            {
-              var datenow = firstday.AddDays(i);
-              var schedule = schedules.Where(f => f.Workdate == datenow);
-
-              @if (schedule.Count() > 0)
-              {
-                <div class="relative bg-yellow-100 px-3 py-2 hover:cursor-pointer">
-                  <time datetime="@datenow">@datenow.ToString("dd")</time>
-                  
-                </div>
-              }
-              else
-              {
-                <div class="relative bg-white px-3 py-2">
-                  <time datetime="@datenow">@datenow.ToString("dd")</time>
-                </div>
-              }
-            }
-          }
-        </div>
-      </div>
-    </div>
-    <div class="md:hidden divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow mt-10">
-      <div class="px-4 py-5 sm:px-6 text-center">
-        <!-- Content goes here -->
-        <span class="">Burguer King -</span>
-        <span class="">8 hours</span>
-        <!-- We use less vertical padding on card headers on desktop than on body sections -->
-      </div>
-      <div class="px-4 py-5 sm:p-6">
-        <div>
-          <time datetime="09:00"
-              class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">Schedule: 9:00 AM</time>
-          <time datetime="18:00"
-              class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">6:00 PM</time>
-        </div>
-        <div>
-          <span class="ml-3  flex-none text-gray-500 group-hover:text-indigo-600 xl:block">Description: 9-12 y 1-6</span>
-        </div>
-      </div>
+    <div id="calendarContent" class="mt-6">
+      @Html.Partial("_CalendarPartial", Model)
     </div>
   </div>
 </div>
-@* <script>
-$(document).ready(function() {
-$('#calendarForm').submit(function(event) {
-event.preventDefault(); // Evita el envío normal del formulario
+@section Scripts {
+  <script>
+    $(document).ready(function () {
+      $('#calendarForm').submit(function (event) {
+        event.preventDefault();
 
-var months = $('#months').val();
-var years = $('#years').val();
+        var month = $('#months').val();
+        var year = $('#years').val();
 
-$.ajax({
-type: 'POST',
-url: '@Url.Action("UpdateCalendar", "Calendar")',
-data: { Months: months, Years: years },
-success: function(response) {
-$('#calendarContent').html(response); // Actualiza el contenido del calendario
-},
-error: function() {
-alert('Hubo un error al actualizar el calendario.');
+        $.ajax({
+          url: '@Url.Action("UpdateCalendar", "Calendar")',
+          data: {
+            months: month,
+            years: year
+          },
+          success: function (result) {
+            $('#calendarContent').html(result);
+          },
+          error: function () {
+            alert('Error al actualizar el calendario');
+          }
+        });
+      });
+    });
+  </script>
 }
-});
-});
-});
-</script> *@

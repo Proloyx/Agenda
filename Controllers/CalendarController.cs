@@ -18,29 +18,36 @@ public class CalendarController : Controller
 {
     private readonly ICookieService _cookieService;
     private readonly AppDbContext _context;
+    private readonly User user;
     public CalendarController(ICookieService cookieService, AppDbContext context)
     {
         _cookieService = cookieService;
         _context = context;
+        user = _cookieService.GetUser();
     }
 
     public IActionResult Index()
     {
-        var user = _context.Users.FirstOrDefault(s => s.Userid == _cookieService.GetUser().Userid);
+        var userRet = _context.Users.FirstOrDefault(s => s.Userid == user.Userid);
         var calendar =new Calendar{ 
             Date = DateOnly.FromDateTime(DateTime.Now), 
-            User = user
+            User = userRet
             }; 
         return View(calendar);
     }
 
     public IActionResult UpdateCalendar(DateSubmit dateSubmit) {
-        var user = _context.Users.FirstOrDefault(s => s.Userid == _cookieService.GetUser().Userid);
+        var userRet = _context.Users.FirstOrDefault(s => s.Userid == user.Userid);
         var calendar = new Calendar{ 
             Date = new DateOnly(dateSubmit.Years, dateSubmit.Months, 1),
-            User = user
+            User = userRet
             };
-        return View("index", calendar);
-        //return PartialView("_CalendarPartial", date);
+        return PartialView("_CalendarPartial", calendar);
+    }
+
+    public IActionResult GetScheduleByDate(int day, int month, int year) {
+        var date = new DateOnly(year,month,day);
+        var schedule = _context.Users.Find(user.Userid).Workcenters.SelectMany(w => w.Schedules).FirstOrDefault(s => s.Workdate == date);
+        return PartialView("_ScheduleCardPartial", schedule);
     }
 }
