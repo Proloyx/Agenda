@@ -9,32 +9,32 @@
   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
   <div class="space-y-12 p-4 md:px-16">
     <div class="border-b border-gray-900/10 pb-12">
-      <h2 class="text-base font-semibold leading-7 text-gray-900">Edit WorkCenter</h2>
+      <h2 class="text-base font-semibold leading-7 text-gray-900">Editar Horario</h2>
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div class="sm:col-span-3">
-          <label asp-for="Workdate" class="block text-sm font-medium leading-6 text-gray-900">Workdate</label>
+          <label asp-for="Workdate" class="block text-sm font-medium leading-6 text-gray-900">Fecha</label>
           <div class="mt-2">
             <input type="date" asp-for="Workdate" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Starttime" class="block text-sm font-medium leading-6 text-gray-900">Starttime</label>
+          <label asp-for="Starttime" class="block text-sm font-medium leading-6 text-gray-900">Entrada</label>
           <div class="mt-2">
             <input type="time" step="1800" asp-for="Starttime" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Endtime" class="block text-sm font-medium leading-6 text-gray-900">Endtime</label>
+          <label asp-for="Endtime" class="block text-sm font-medium leading-6 text-gray-900">Salida</label>
           <div class="mt-2">
             <input type="time" step="1800" asp-for="Endtime" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Workedhours" class="block text-sm font-medium leading-6 text-gray-900">Workedhours</label>
+          <label asp-for="Workedhours" class="block text-sm font-medium leading-6 text-gray-900">Horas</label>
           <div class="mt-2">
             <input type="number" step="0.1" asp-for="Workedhours" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             <span asp-validation-for="Workedhours" class="text-red-500"></span>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="sm:col-span-3">
-          <label asp-for="Description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
+          <label asp-for="Description" class="block text-sm font-medium leading-6 text-gray-900">Descripción</label>
           <div class="mt-2">
             <input type="text" asp-for="Description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
@@ -53,8 +53,8 @@
   </div>
 
   <div class="mt-6 flex items-center justify-end gap-x-6 px-4 md:px-16">
-    <button asp-action="Index" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+    <button asp-action="Index" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
+    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Guardar</button>
   </div>
 </form>
 

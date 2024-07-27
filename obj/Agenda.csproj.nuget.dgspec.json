@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/eloy/Desktop/Eloy/Programacion/Agenda/Agenda.csproj": {}
+    "C:\\Datos\\Eloy\\Work\\Proyectos\\Agenda\\Agenda.csproj": {}
   },
   "projects": {
-    "/Users/eloy/Desktop/Eloy/Programacion/Agenda/Agenda.csproj": {
+    "C:\\Datos\\Eloy\\Work\\Proyectos\\Agenda\\Agenda.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/eloy/Desktop/Eloy/Programacion/Agenda/Agenda.csproj",
+        "projectUniqueName": "C:\\Datos\\Eloy\\Work\\Proyectos\\Agenda\\Agenda.csproj",
         "projectName": "Agenda",
-        "projectPath": "/Users/eloy/Desktop/Eloy/Programacion/Agenda/Agenda.csproj",
-        "packagesPath": "/Users/eloy/.nuget/packages/",
-        "outputPath": "/Users/eloy/Desktop/Eloy/Programacion/Agenda/obj/",
+        "projectPath": "C:\\Datos\\Eloy\\Work\\Proyectos\\Agenda\\Agenda.csproj",
+        "packagesPath": "C:\\Users\\eloyc\\.nuget\\packages\\",
+        "outputPath": "C:\\Datos\\Eloy\\Work\\Proyectos\\Agenda\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/eloy/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\eloyc\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -95,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
