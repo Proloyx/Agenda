@@ -18,6 +18,9 @@
   <title>@ViewData["Title"] - Agenda</title>
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -93,8 +96,6 @@
                     class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                     <!-- Active: "bg-gray-100", Not Active: "" -->
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                      id="user-menu-item-0">Perfile</a>
                     <a asp-controller="Session" asp-action="Logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
                       id="user-menu-item-2">Cerrar cesión</a>
                   </div>
@@ -163,8 +164,6 @@
               </button>
             </div>
             <div class="mt-3 space-y-1 px-2">
-              <a href="#"
-                class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">Perfil</a>
               <a asp-controller="Session" asp-action="Logout"
                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">Cerrar Cesión</a>
             </div>
@@ -236,6 +235,8 @@
   <script src="~/lib/jquery/dist/jquery.min.js"></script>
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/js/site.js" asp-append-version="true"></script>
+  
+  <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         const userMenuButton = document.getElementById('user-menu-button');

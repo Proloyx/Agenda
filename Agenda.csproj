@@ -8,6 +8,7 @@
 
   <ItemGroup>
      <PackageReference Include="automapper" Version="13.0.1" />
+     <PackageReference Include="Chart.js" Version="3.7.1" />
      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.7" />
      <UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />

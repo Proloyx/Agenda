@@ -30,6 +30,7 @@ builder.Services.AddAuthentication(
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddSingleton<ICookieService,CookieService>();
+builder.Services.AddScoped<IDashboardService,DashboardService>();
 
 var app = builder.Build();
 

@@ -20,8 +20,10 @@ public partial class Workcenter
     public int? Paymentday { get; set; }
     [Display(Name = "Neto")]
     public decimal Netrate { get; set; }
-
+    [Display(Name = "En activo")]
+    public bool IsActive { get; set; }
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     [JsonIgnore]
     public virtual User User { get; set; } = null!;
+    
 }

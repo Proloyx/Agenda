@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Agenda.Services;
 using Agenda.Models.DashboardModels;
 using Agenda.Interfaces;
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Npgsql;
 
 namespace Agenda.Controllers;
 
@@ -14,35 +17,34 @@ namespace Agenda.Controllers;
 [TypeFilter(typeof(ValidateUserFilter))]
 public class DashboardController : Controller
 {
-    private readonly ILogger<DashboardController> _logger;
     private readonly AppDbContext _context;
     private readonly ICookieService _cookieService;
     private readonly User user;
+    private readonly IDashboardService _dashboardService;
 
-    public DashboardController(ILogger<DashboardController> logger, AppDbContext context, ICookieService cookieService)
+    public DashboardController(AppDbContext context, ICookieService cookieService, IDashboardService dashboardService)
     {
-        _logger = logger;
         _context = context;
         _cookieService = cookieService;
         user = _cookieService.GetUser();
+        _dashboardService = dashboardService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var sum = await _context.Users.Where(u => u.Userid == user.Userid)
-                .SelectMany(u => u.Workcenters)
-                .SelectMany(s => s.Schedules)
-                .SumAsync(u => u.Workedhours * u.Center.Netrate);
-
-        Dashboard dash = new Dashboard{
-            Total = sum
-        };
+        var dash = new Dashboard
+            { 
+                Total = await _dashboardService.GetTotal(),
+                User = await _context.Users.FindAsync(user.Userid)
+            };
+        
         return View(dash);
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    [HttpGet]
+    public async Task<IActionResult> GetChartData()
     {
-        return View(new ErrorViewModel { RequestId = _context.Users?.FirstOrDefault().Name ?? HttpContext.TraceIdentifier });
+        var chart = await _dashboardService.GetChart();
+        return Json(chart);
     }
 }

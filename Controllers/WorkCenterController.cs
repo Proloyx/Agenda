@@ -72,7 +72,7 @@ namespace Agenda.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Address,Grossrate,Paymentday,Netrate")] WorkCenterCreate workCenter)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Address,Grossrate,Paymentday,Netrate,IsActive")] WorkCenterCreate workCenter)
         {
             var center = await _context.Workcenters.FirstOrDefaultAsync(w => w.Centerid == id);
             if (center == null)
@@ -85,6 +85,7 @@ namespace Agenda.Controllers
             center.Grossrate = workCenter.Grossrate;
             center.Paymentday = workCenter.Paymentday;
             center.Netrate = workCenter.Netrate;
+            center.IsActive = workCenter.IsActive;
 
             if (ModelState.IsValid)
             {

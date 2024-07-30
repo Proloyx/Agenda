@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Agenda.Models.DashboardModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Agenda.Data;
@@ -16,10 +17,9 @@ public partial class AppDbContext : DbContext
     }
 
     public virtual DbSet<Schedule> Schedules { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
-
     public virtual DbSet<Workcenter> Workcenters { get; set; }
+    public DbSet<MonthlySalary> MonthlySalaries { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql();
@@ -90,6 +90,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Netrate)
                 .HasPrecision(10, 2)
                 .HasColumnName("netrate");
+            entity.Property(w => w.IsActive)
+                .HasColumnName("isactive")
+                .HasDefaultValue(true);
             entity.Property(e => e.Paymentday).HasColumnName("paymentday");
             entity.Property(e => e.Userid).HasColumnName("userid");
 
@@ -97,6 +100,8 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.Userid)
                 .HasConstraintName("workcenters_userid_fkey");
         });
+
+        modelBuilder.Entity<MonthlySalary>().HasNoKey();
 
         OnModelCreatingPartial(modelBuilder);
     }

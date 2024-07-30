@@ -15,5 +15,6 @@ namespace Agenda.Models.WorkCenterModels
         [Range(1, 31, ErrorMessage = "Paymentday must be a number between 1 and 31.")]
         public int? Paymentday { get; set; }
         public decimal Netrate { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

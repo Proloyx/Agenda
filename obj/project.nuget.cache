@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "fnWC/WviHi0=",
+  "dgSpecHash": "Opn1Jg8z6aw=",
   "success": true,
   "projectFilePath": "C:\\Datos\\Eloy\\Work\\Proyectos\\Agenda\\Agenda.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\eloyc\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\eloyc\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\eloyc\\.nuget\\packages\\chart.js\\3.7.1\\chart.js.3.7.1.nupkg.sha512",
     "C:\\Users\\eloyc\\.nuget\\packages\\dotnetenv\\3.0.0\\dotnetenv.3.0.0.nupkg.sha512",
     "C:\\Users\\eloyc\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\eloyc\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.7\\microsoft.aspnetcore.authentication.jwtbearer.8.0.7.nupkg.sha512",
