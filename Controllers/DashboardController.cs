@@ -8,8 +8,6 @@ using Agenda.Services;
 using Agenda.Models.DashboardModels;
 using Agenda.Interfaces;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Npgsql;
 
 namespace Agenda.Controllers;
 
@@ -33,18 +31,16 @@ public class DashboardController : Controller
     public async Task<IActionResult> Index()
     {
         var dash = new Dashboard
-            { 
-                Total = await _dashboardService.GetTotal(),
-                User = await _context.Users.FindAsync(user.Userid)
+            {
+                User = await _context.Users.FindAsync(user.Userid),
+                Chart = JsonSerializer.Serialize(await _dashboardService.GetChart()),
+                AverageWorkedHours = await _dashboardService.GetAverageWorkedHours(),
+                AverageMonthWorkedHours = await _dashboardService.GetMonthAverageWorkedHours(),
+                AverageMonthGrossRate = await _dashboardService.GetMonthAverageGrossRate(),
+                AverageMonthNetRate = await _dashboardService.GetMonthAverageNetRate(),
+                TotalWorkedHours = await _dashboardService.GetTotalWorkedHours()
             };
         
         return View(dash);
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> GetChartData()
-    {
-        var chart = await _dashboardService.GetChart();
-        return Json(chart);
     }
 }

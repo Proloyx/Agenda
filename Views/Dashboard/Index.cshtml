@@ -2,7 +2,60 @@
 @{
     ViewData["Title"] = "Dashboard Page";
 }
-<div class="grid grid-cols-2 gap-4 p-4">
+
+<div class="rounded-lg shadow-lg m-8">
+    <div class="overflow-hidden bg-white">
+        <div class="px-4 py-6 sm:px-6">
+            <h3 class="text-xl font-semibold leading-7 text-center text-gray-900">Información Personal</h3>
+        </div>
+        <div class="border-t border-gray-100 p-4">
+            <dl class="divide-y divide-gray-100">
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Usuario</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.User.Name</dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Email</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.User.Email
+                    </dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Trabaja en</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">
+                        @Model.User.GetWorkCenters()</dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Promedio de horas trabajadas</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageWorkedHours</dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Promedio de horas trabajadas al mes</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageMonthWorkedHours</dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Promedio de salario bruto al mes</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageMonthGrossRate</dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Promedio de salario neto al mes</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageMonthNetRate</dd>
+                </div>
+                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Horas totales trabajadas</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.TotalWorkedHours</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="grid sm:grid-cols-2 gap-4 p-4 ">
     <div>
         <div class="overflow-hidden bg-white">
             <div class="px-4 py-6 sm:px-6">
@@ -10,80 +63,54 @@
             </div>
             <div class="border-t border-gray-100">
                 <dl class="divide-y divide-gray-100">
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Usuario</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">@Model.User.Name</dd>
-                    </div>
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Email</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">@Model.User.Email
-                        </dd>
-                    </div>
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Trabaja en</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">@Model.User.GetWorkCenters()</dd>
-                    </div>
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Promedio de horas trabajadas al mes</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">@Model.Total</dd>
-                    </div>
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Promedio de salario bruto</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">1300</dd>
-                    </div>
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Promedio de salario neto</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">931</dd>
+                    <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-900">Horas totales trabajadas</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.TotalWorkedHours</dd>
                     </div>
                 </dl>
             </div>
         </div>
     </div>
-    <div class="overflow-hidden bg-white">
-        <canvas id="chartContainer"></canvas>
+    <div class="overflow-hidden bg-white b">
+        <div class="px-4 py-6 sm:px-6">
+            <h3 class="text-base font-semibold leading-7 text-gray-900">Ultimos 12 meses</h3>
+        </div>
+        <div class="overflow-hidden bg-white">
+            <canvas id="chartContainer" class="w-auto"></canvas>
+        </div>
     </div>
+    
 </div>
 
 <script type="text/javascript">
+    var data = @Html.Raw(Model.Chart)
+    var chart = document.getElementById("chartContainer");
 
-    jQuery.ajax({
-        url: '@Url.Action("GetChartData", "Dashboard")',
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-            var chart = document.getElementById("chartContainer");
-
-            var barChart = new Chart(chart, {
-                type: 'bar',
-                data: {
-                    labels: data.months,
-                    datasets: [{
-                        label: "Total",
-                        backgroundColor: "#4F46E5",
-                        borderColor: "rgba(2,117,216,1)",
-                        data: data.totals,
-                    }],
-                },
-                options: {
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            grid: {
-                                display: true
-                            },
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+    var barChart = new Chart(chart, {
+        type: 'bar',
+        data: {
+            labels: data.Months,
+            datasets: [{
+                label: "Total",
+                backgroundColor: "#4F46E5",
+                borderColor: "rgba(2,117,216,1)",
+                data: data.Totals,
+            }],
         },
-        error: function (error) {
-            console.log(error)
+        options: {
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: true
+                    },
+                    beginAtZero: true
+                }
+            }
         }
-    })
+    });
 </script>

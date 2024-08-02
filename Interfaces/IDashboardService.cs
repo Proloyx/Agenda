@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Agenda.Models.DashboardModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Agenda.Interfaces
 {
     public interface IDashboardService
     {
-        public Task<decimal> GetTotal();
         public Task<Chart> GetChart();
+        public Task<decimal> GetAverageWorkedHours();
+        public Task<decimal> GetMonthAverageWorkedHours();
+        public Task<decimal> GetMonthAverageGrossRate();
+        public Task<decimal> GetMonthAverageNetRate();
+        public Task<decimal> GetTotalWorkedHours();
     }
 }
