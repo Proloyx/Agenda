@@ -5,30 +5,42 @@
 
 <div class="p-12">
   <div class="lg:flex lg:h-full lg:flex-col">
-    <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
+    <header class="flex items-center justify-between border-b border-gray-200 sm:px-6 py-4 lg:flex-none">
       <h1 class="text-base font-semibold leading-6 text-gray-900">
         <time datetime="@Model.Date.ToString("yyyy-MM-dd")">@Model.Date.ToString("MMMM")</time>
       </h1>
       <div class="flex items-center">
         <form class="flex items-center" id="calendarForm" asp-action="UpdateCalendar" asp-controller="Calendar">
-          <div class="w-auto max-w-xs">
+          <div class="w-full max-w-xs">
             <select id="months" name="months"
               class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-              <option value="1">Enero</option>
-              <option value="2">Febrero</option>
-              <option value="3">Marzo</option>
-              <option value="4">Abril</option>
-              <option value="5">Mayo</option>
-              <option value="6">Junio</option>
-              <option value="7">Julio</option>
-              <option value="8">Agosto</option>
-              <option value="9">Septiembre</option>
-              <option value="10">Octubre</option>
-              <option value="11">Noviembre</option>
-              <option value="12">Diciembre</option>
+              <option class="md:hidden" value="1">Ene</option>
+              <option class="hidden sm:block" value="1">Enero</option>
+              <option class="md:hidden" value="2">Feb</option>
+              <option class="hidden sm:block" value="2">Febrero</option>
+              <option class="md:hidden" value="3">Mar</option>
+              <option class="hidden sm:block" value="3">Marzo</option>
+              <option class="md:hidden" value="4">Abr</option>
+              <option class="hidden sm:block" value="4">Abril</option>
+              <option class="md:hidden" value="5">May</option>
+              <option class="hidden sm:block" value="5">Mayo</option>
+              <option class="md:hidden" value="6">Jun</option>
+              <option class="hidden sm:block" value="6">Junio</option>
+              <option class="md:hidden" value="7">Jul</option>
+              <option class="hidden sm:block" value="7">Julio</option>
+              <option class="md:hidden" value="8">Ago</option>
+              <option class="hidden sm:block" value="8">Agosto</option>
+              <option class="md:hidden" value="9">Sep</option>
+              <option class="hidden sm:block" value="9">Septiembre</option>
+              <option class="md:hidden" value="10">Oct</option>
+              <option class="hidden sm:block" value="10">Octubre</option>
+              <option class="md:hidden" value="11">Nov</option>
+              <option class="hidden sm:block" value="11">Noviembre</option>
+              <option class="md:hidden" value="12">Dic</option>
+              <option class="hidden sm:block" value="12">Diciembre</option>
             </select>
           </div>
-          <div class="w-auto max-w-xs mx-2">
+          <div class="w-full max-w-xs mx-2">
             <select id="years" name="years"
               class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
               <option value="2024">2024</option>
