@@ -49,7 +49,7 @@ namespace Agenda.Services
             {
                 var us = await _context.Users.FindAsync(user.Userid);
                 var averageWorkedhours = us.Workcenters.SelectMany(w => w.Schedules).Average(s => s.Workedhours);
-                return averageWorkedhours;
+                return Math.Round(averageWorkedhours, 2);
             }
             catch (Exception)
             {
@@ -70,8 +70,8 @@ namespace Agenda.Services
                     AverageHours = g.Average(s => s.Workedhours)
                 })
                 .ToDictionary(g => g.Month, g => g.AverageHours);
-                var overallAverage = monthlyAverages.Values.Any() ? monthlyAverages.Values.Average() : 0;
-                return overallAverage;
+                var monthAverageWorkedHours = monthlyAverages.Values.Any() ? monthlyAverages.Values.Average() : 0;
+                return Math.Round(monthAverageWorkedHours, 2);
             }
             catch (Exception)
             {
@@ -98,9 +98,9 @@ namespace Agenda.Services
                         })
                     .ToDictionary(g => g.Month, g => g.GrossSalary);
                 
-                var overallGrossSalaryAverage = monthlyGrossSalaries.Values.Any() ? monthlyGrossSalaries.Values.Average() : 0;
+                var monthAverageGrossRate = monthlyGrossSalaries.Values.Any() ? monthlyGrossSalaries.Values.Average() : 0;
 
-                return overallGrossSalaryAverage;
+                return Math.Round(monthAverageGrossRate, 2);
             }
             catch (Exception)
             {
@@ -126,8 +126,8 @@ namespace Agenda.Services
                             NetSalary = g.Sum(x => x.NetSalary)
                         })
                     .ToDictionary(g => g.Month, g => g.NetSalary);
-                var overallNetSalaryAverage = monthlyNetSalaries.Values.Any() ? monthlyNetSalaries.Values.Average() : 0;
-                return overallNetSalaryAverage;
+                var monthAverageNetRate = monthlyNetSalaries.Values.Any() ? monthlyNetSalaries.Values.Average() : 0;
+                return Math.Round(monthAverageNetRate, 2);
             }
             catch (Exception)
             {
@@ -139,8 +139,8 @@ namespace Agenda.Services
             try
             {
                 var us = await _context.Users.FindAsync(user.Userid);
-                var sumWorkedhours = us.Workcenters.SelectMany(w => w.Schedules).Sum(s => s.Workedhours);
-                return sumWorkedhours;
+                var totalWorkedhours = us.Workcenters.SelectMany(w => w.Schedules).Sum(s => s.Workedhours);
+                return Math.Round(totalWorkedhours, 2);
             }
             catch (Exception)
             {

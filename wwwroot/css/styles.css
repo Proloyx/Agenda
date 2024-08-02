@@ -827,6 +827,14 @@ select {
   margin: 2rem;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
+}
+
 .-mx-0 {
   margin-left: -0px;
   margin-right: -0px;
@@ -1944,6 +1952,14 @@ select {
 
   .sm\:col-span-3 {
     grid-column: span 3 / span 3;
+  }
+
+  .sm\:m-4 {
+    margin: 1rem;
+  }
+
+  .sm\:m-16 {
+    margin: 4rem;
   }
 
   .sm\:-mx-0 {
