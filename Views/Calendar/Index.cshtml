@@ -7,7 +7,7 @@
   <div class="lg:flex lg:h-full lg:flex-col">
     <header class="flex items-center justify-between border-b border-gray-200 sm:px-6 py-4 lg:flex-none">
       <h1 class="text-base font-semibold leading-6 text-gray-900">
-        <time datetime="@Model.Date.ToString("yyyy-MM-dd")">@Model.Date.ToString("MMMM")</time>
+        <time class="text-2xl" datetime="@Model.Date.ToString("yyyy-MM-dd")">@Model.Date.ToString("MMMM")</time>
       </h1>
       <div class="flex items-center">
         <form class="flex items-center" id="calendarForm" asp-action="UpdateCalendar" asp-controller="Calendar">
@@ -66,7 +66,8 @@
         <div class="hidden md:ml-4 md:flex md:items-center">
           <div class="ml-6 h-6 w-px bg-gray-300"></div>
           <a asp-action="Index" asp-controller="WorkCenter"
-            class="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Añadir Horario</a>
+            class="ml-6 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Añadir
+            Horario</a>
         </div>
         <div class="hidden relative ml-6 md:hidden">
           <button type="button"
@@ -109,6 +110,16 @@
           }
         });
       });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var currentDate = new Date();
+      var currentMonth = currentDate.getMonth() + 1;
+      var currentYear = currentDate.getFullYear();
+
+      document.getElementById("months").value = currentMonth;
+      document.getElementById("years").value = currentYear;
     });
   </script>
 }

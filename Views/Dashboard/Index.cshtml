@@ -3,12 +3,12 @@
     ViewData["Title"] = "Dashboard Page";
 }
 
-<div class="rounded-lg shadow-lg m-2 sm:m-4">
+<div class=" m-2 sm:m-4 grid sm:grid-cols-2 gap-4 p-4">
     <div class="overflow-hidden bg-white">
         <div class="px-4 py-6 sm:px-6">
             <h3 class="text-xl font-semibold leading-7 text-center text-gray-900">Información Personal</h3>
         </div>
-        <div class="border-t border-gray-100 p-4">
+        <div class="border-gray-100 p-4">
             <dl class="divide-y divide-gray-100">
                 <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-900">Usuario</dt>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-900">Promedio de horas trabajadas al mes</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageMonthWorkedHours</dd>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageMonthTotalWorkedHours</dd>
                 </div>
                 <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-900">Promedio de salario bruto al mes</dt>
@@ -40,11 +40,15 @@
                     <dt class="text-sm font-medium text-gray-900">Promedio de salario neto al mes</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.AverageMonthNetRate</dd>
                 </div>
-                <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-900">Horas totales trabajadas</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.TotalWorkedHours</dd>
-                </div>
             </dl>
+        </div>
+    </div>
+    <div class="overflow-hidden bg-white b">
+        <div class="px-4 py-6 sm:px-6">
+            <h3 class="text-xl font-semibold leading-7 text-center text-gray-900">Últimos 12 meses</h3>
+        </div>
+        <div class="overflow-hidden bg-white">
+            <canvas id="chartContainer" class="w-auto"></canvas>
         </div>
     </div>
 </div>
@@ -55,31 +59,19 @@
 
 
 
-<div class="grid sm:grid-cols-2 gap-4 p-4 ">
+<div class="">
     <div>
         <div class="overflow-hidden bg-white">
             <div class="px-4 py-6 sm:px-6">
-                <h3 class="text-base font-semibold leading-7 text-gray-900">Información Personal</h3>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">Información Mensual</h3>
             </div>
             <div class="border-t border-gray-100">
                 <dl class="divide-y divide-gray-100">
-                    <div class="px-4 py-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-900">Horas totales trabajadas</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-0">@Model.TotalWorkedHours</dd>
-                    </div>
+                    
                 </dl>
             </div>
         </div>
     </div>
-    <div class="overflow-hidden bg-white b">
-        <div class="px-4 py-6 sm:px-6">
-            <h3 class="text-base font-semibold leading-7 text-gray-900">Ultimos 12 meses</h3>
-        </div>
-        <div class="overflow-hidden bg-white">
-            <canvas id="chartContainer" class="w-auto"></canvas>
-        </div>
-    </div>
-    
 </div>
 
 <script type="text/javascript">

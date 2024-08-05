@@ -38,26 +38,13 @@ namespace Agenda.Services
                 };
                 return chart;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return new Chart();
             }
         }
 
         public async Task<decimal> GetAverageWorkedHours(){
-            try
-            {
-                var us = await _context.Users.FindAsync(user.Userid);
-                var averageWorkedhours = us.Workcenters.SelectMany(w => w.Schedules).Average(s => s.Workedhours);
-                return Math.Round(averageWorkedhours, 2);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
-
-        public async Task<decimal> GetMonthAverageWorkedHours(){
             try
             {
                 var us = await _context.Users.FindAsync(user.Userid);
@@ -72,6 +59,31 @@ namespace Agenda.Services
                 .ToDictionary(g => g.Month, g => g.AverageHours);
                 var monthAverageWorkedHours = monthlyAverages.Values.Any() ? monthlyAverages.Values.Average() : 0;
                 return Math.Round(monthAverageWorkedHours, 2);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public async Task<decimal> GetMonthAverageTotalWorkedHours(){
+            try
+            {
+                var us = await _context.Users.FindAsync(user.Userid);
+
+                var monthlyWorkedHours = us.Workcenters
+                .SelectMany(workCenter => workCenter.Schedules)
+                .GroupBy(schedule => new { schedule.Workdate.Year, schedule.Workdate.Month })
+                .Select(g => new
+                    {
+                        Month = $"{g.Key.Year}-{g.Key.Month:D2}",
+                        TotalHours = g.Sum(schedule => schedule.Workedhours)
+                    })
+                .ToList();
+
+                var averageWorkedHoursPerMonth = monthlyWorkedHours.Any() ? monthlyWorkedHours.Average(x => x.TotalHours) : 0;
+
+                return averageWorkedHoursPerMonth;
             }
             catch (Exception)
             {
@@ -134,18 +146,6 @@ namespace Agenda.Services
                 return 0;
             }
         }
-
-        public async Task<decimal> GetTotalWorkedHours(){
-            try
-            {
-                var us = await _context.Users.FindAsync(user.Userid);
-                var totalWorkedhours = us.Workcenters.SelectMany(w => w.Schedules).Sum(s => s.Workedhours);
-                return Math.Round(totalWorkedhours, 2);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
+        
     }
 }

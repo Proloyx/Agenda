@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <div class="px-4 mt-4 sm:px-6 lg:px-8">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
@@ -73,3 +72,27 @@
     </table>
   </div>
 </div>
+
+@* @section Scripts {
+  <script>
+    $(document).ready(function () {
+      $('#calendarForm').submit(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+          url: '@Url.Action("UpdateCalendar", "Calendar")',
+          data: {
+            months: month,
+            years: year
+          },
+          success: function (result) {
+            $('#calendarContent').html(result);
+          },
+          error: function () {
+            alert('Error al actualizar el calendario');
+          }
+        });
+      });
+    });
+  </script>
+} *@

@@ -30,17 +30,19 @@ public class DashboardController : Controller
 
     public async Task<IActionResult> Index()
     {
+        Stopwatch stopwtatch = new Stopwatch();
+        stopwtatch.Start();
         var dash = new Dashboard
             {
                 User = await _context.Users.FindAsync(user.Userid),
                 Chart = JsonSerializer.Serialize(await _dashboardService.GetChart()),
                 AverageWorkedHours = await _dashboardService.GetAverageWorkedHours(),
-                AverageMonthWorkedHours = await _dashboardService.GetMonthAverageWorkedHours(),
+                AverageMonthTotalWorkedHours = await _dashboardService.GetMonthAverageTotalWorkedHours(),
                 AverageMonthGrossRate = await _dashboardService.GetMonthAverageGrossRate(),
-                AverageMonthNetRate = await _dashboardService.GetMonthAverageNetRate(),
-                TotalWorkedHours = await _dashboardService.GetTotalWorkedHours()
+                AverageMonthNetRate = await _dashboardService.GetMonthAverageNetRate()
             };
-        
+        stopwtatch.Stop();
+        Console.WriteLine("Tiempo " + stopwtatch.ElapsedMilliseconds);
         return View(dash);
     }
 }
