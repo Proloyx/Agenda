@@ -99,6 +99,8 @@ namespace Agenda.Services
         {
             try
             {
+                var watch = new Stopwatch();
+                watch.Start();
                 var us = await _context.Users.FindAsync(user.Userid);
 
                 var monthlyWorkedHours = us.Workcenters
@@ -112,7 +114,8 @@ namespace Agenda.Services
                 .ToList();
 
                 var averageWorkedHoursPerMonth = monthlyWorkedHours.Any() ? monthlyWorkedHours.Average(x => x.TotalHours) : 0;
-
+                watch.Stop();
+                Console.WriteLine("New " + watch.ElapsedMilliseconds);
                 return averageWorkedHoursPerMonth;
             }
             catch (Exception)
