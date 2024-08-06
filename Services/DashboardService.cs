@@ -71,12 +71,10 @@ namespace Agenda.Services
 
         public async Task<decimal> PruebaNew()
         {
-            using (AppDbContext context = new AppDbContext())
-            {
                 var watch = new Stopwatch();
                 watch.Start();
-                var data = context.Workcenters
-                            .Where(w => w.Userid == 9)
+                var data = _context.Workcenters
+                            .Where(w => w.Userid == user.Userid)
                             .Include(w => w.Schedules)
                             .SelectMany(w => w.Schedules)
                             .GroupBy(s => new { s.Workdate.Month, s.Workdate.Year })
@@ -92,7 +90,6 @@ namespace Agenda.Services
                 Console.WriteLine("New " + watch.ElapsedMilliseconds);
 
                 return Math.Round(promedio, 2);
-            }
         }
 
         public async Task<decimal> GetMonthAverageTotalWorkedHours()
@@ -115,8 +112,9 @@ namespace Agenda.Services
 
                 var averageWorkedHoursPerMonth = monthlyWorkedHours.Any() ? monthlyWorkedHours.Average(x => x.TotalHours) : 0;
                 watch.Stop();
-                Console.WriteLine("New " + watch.ElapsedMilliseconds);
-                return averageWorkedHoursPerMonth;
+                Console.WriteLine("Old " + watch.ElapsedMilliseconds);
+
+                return Math.Round(averageWorkedHoursPerMonth, 2);
             }
             catch (Exception)
             {

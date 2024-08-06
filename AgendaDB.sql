@@ -16,7 +16,8 @@ CREATE TABLE WorkCenters (
     Address VARCHAR(200),
     GrossRate DECIMAL(10, 2) NOT NULL,  -- Gross rate per hour
     PaymentDay int not null,
-    NetRate DECIMAL(10, 2) NOT NULL  -- Net rate per hour
+    NetRate DECIMAL(10, 2) NOT NULL,  -- Net rate per hour
+    IsActive BOOLEAN DEFAULT TRUE
 );
 
 -- Table Schedules

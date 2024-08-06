@@ -11,11 +11,15 @@ using Agenda.Services;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-
+var env = builder.Environment;
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(Env.GetString("DbConnection")));
+if (env.IsDevelopment()){
+    builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(Env.GetString("DbConnection")));
+}else {
+    builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(Env.GetString("DbConnectionReal")));
+}
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
