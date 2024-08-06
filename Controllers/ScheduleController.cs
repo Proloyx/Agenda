@@ -33,7 +33,7 @@ namespace Agenda.Controllers
         {
             var schedules = _context.Workcenters.Where(w => w.Userid == user.Userid ).SelectMany(w => w.Schedules);
                     return schedules != null ? 
-                        View(await schedules.OrderBy(s => s.Workdate).Take(15).ToListAsync()) :
+                        View(await schedules.OrderBy(s => s.Workdate).ToListAsync()) :
                         Problem("Entity set 'SiscomContext.RangoFirmas'  is null.");
         }
 
