@@ -16,6 +16,7 @@ namespace Agenda.Models.DashboardModels
 
         // Informacion Personal
         public decimal AverageWorkedHours {get; set;}
+        public decimal Nuevo {get; set;}
         public decimal AverageMonthTotalWorkedHours {get; set;}
         public decimal AverageMonthGrossRate{get; set;}
         public decimal AverageMonthNetRate{get; set;}

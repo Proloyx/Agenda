@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Agenda.Data;
@@ -10,7 +11,7 @@ using Npgsql;
 
 namespace Agenda.Services
 {
-    public class DashboardService:IDashboardService
+    public class DashboardService : IDashboardService
     {
         private readonly AppDbContext _context;
         private readonly ICookieService _cookieService;
@@ -22,7 +23,8 @@ namespace Agenda.Services
             user = _cookieService.GetUser();
         }
 
-        public async Task<Chart> GetChart(){
+        public async Task<Chart> GetChart()
+        {
             try
             {
                 var userIdParam = new NpgsqlParameter("user_id", user.Userid);
@@ -30,7 +32,7 @@ namespace Agenda.Services
                 var data = await _context.Set<MonthlySalary>()
                            .FromSqlRaw("SELECT * FROM GetTotalSalaryForUserLast12Months(@user_id)", userIdParam)
                            .ToListAsync();
-    
+
                 var chart = new Chart
                 {
                     Months = data.Select(ms => ms.Month).ToList(),
@@ -44,7 +46,8 @@ namespace Agenda.Services
             }
         }
 
-        public async Task<decimal> GetAverageWorkedHours(){
+        public async Task<decimal> GetAverageWorkedHours()
+        {
             try
             {
                 var us = await _context.Users.FindAsync(user.Userid);
@@ -66,7 +69,34 @@ namespace Agenda.Services
             }
         }
 
-        public async Task<decimal> GetMonthAverageTotalWorkedHours(){
+        public async Task<decimal> PruebaNew()
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                var watch = new Stopwatch();
+                watch.Start();
+                var data = context.Workcenters
+                            .Where(w => w.Userid == 9)
+                            .Include(w => w.Schedules)
+                            .SelectMany(w => w.Schedules)
+                            .GroupBy(s => new { s.Workdate.Month, s.Workdate.Year })
+                            .Select(g => new
+                            {
+                                Mes = $"{g.Key.Year}-{g.Key.Month:D2}",
+                                Horas = g.Sum(s => s.Workedhours)
+                            })
+                            .ToList();
+
+                var promedio = data == null || !data.Any() ? 0 : data.Average(d => d.Horas);
+                watch.Stop();
+                Console.WriteLine("New " + watch.ElapsedMilliseconds);
+
+                return Math.Round(promedio, 2);
+            }
+        }
+
+        public async Task<decimal> GetMonthAverageTotalWorkedHours()
+        {
             try
             {
                 var us = await _context.Users.FindAsync(user.Userid);
@@ -75,10 +105,10 @@ namespace Agenda.Services
                 .SelectMany(workCenter => workCenter.Schedules)
                 .GroupBy(schedule => new { schedule.Workdate.Year, schedule.Workdate.Month })
                 .Select(g => new
-                    {
-                        Month = $"{g.Key.Year}-{g.Key.Month:D2}",
-                        TotalHours = g.Sum(schedule => schedule.Workedhours)
-                    })
+                {
+                    Month = $"{g.Key.Year}-{g.Key.Month:D2}",
+                    TotalHours = g.Sum(schedule => schedule.Workedhours)
+                })
                 .ToList();
 
                 var averageWorkedHoursPerMonth = monthlyWorkedHours.Any() ? monthlyWorkedHours.Average(x => x.TotalHours) : 0;
@@ -91,25 +121,26 @@ namespace Agenda.Services
             }
         }
 
-        public async Task<decimal> GetMonthAverageGrossRate(){
+        public async Task<decimal> GetMonthAverageGrossRate()
+        {
             try
             {
                 var us = await _context.Users.FindAsync(user.Userid);
                 var monthlyGrossSalaries = us.Workcenters
                     .SelectMany(workCenter => workCenter.Schedules.Select(schedule => new
-                        {
-                            schedule.Workdate.Year,
-                            schedule.Workdate.Month,
-                            GrossSalary = schedule.Workedhours * workCenter.Grossrate
-                        }))
+                    {
+                        schedule.Workdate.Year,
+                        schedule.Workdate.Month,
+                        GrossSalary = schedule.Workedhours * workCenter.Grossrate
+                    }))
                     .GroupBy(x => new { x.Year, x.Month })
                     .Select(g => new
-                        {
-                            Month = $"{g.Key.Year}-{g.Key.Month:D2}",
-                            GrossSalary = g.Sum(x => x.GrossSalary)
-                        })
+                    {
+                        Month = $"{g.Key.Year}-{g.Key.Month:D2}",
+                        GrossSalary = g.Sum(x => x.GrossSalary)
+                    })
                     .ToDictionary(g => g.Month, g => g.GrossSalary);
-                
+
                 var monthAverageGrossRate = monthlyGrossSalaries.Values.Any() ? monthlyGrossSalaries.Values.Average() : 0;
 
                 return Math.Round(monthAverageGrossRate, 2);
@@ -120,23 +151,24 @@ namespace Agenda.Services
             }
         }
 
-        public async Task<decimal> GetMonthAverageNetRate(){
+        public async Task<decimal> GetMonthAverageNetRate()
+        {
             try
             {
                 var us = await _context.Users.FindAsync(user.Userid);
                 var monthlyNetSalaries = us.Workcenters
                     .SelectMany(workCenter => workCenter.Schedules.Select(schedule => new
-                        {
-                            schedule.Workdate.Year,
-                            schedule.Workdate.Month,
-                            NetSalary = schedule.Workedhours * workCenter.Netrate
-                        }))
+                    {
+                        schedule.Workdate.Year,
+                        schedule.Workdate.Month,
+                        NetSalary = schedule.Workedhours * workCenter.Netrate
+                    }))
                     .GroupBy(x => new { x.Year, x.Month })
                     .Select(g => new
-                        {
-                            Month = $"{g.Key.Year}-{g.Key.Month:D2}",
-                            NetSalary = g.Sum(x => x.NetSalary)
-                        })
+                    {
+                        Month = $"{g.Key.Year}-{g.Key.Month:D2}",
+                        NetSalary = g.Sum(x => x.NetSalary)
+                    })
                     .ToDictionary(g => g.Month, g => g.NetSalary);
                 var monthAverageNetRate = monthlyNetSalaries.Values.Any() ? monthlyNetSalaries.Values.Average() : 0;
                 return Math.Round(monthAverageNetRate, 2);
@@ -146,6 +178,6 @@ namespace Agenda.Services
                 return 0;
             }
         }
-        
+
     }
 }

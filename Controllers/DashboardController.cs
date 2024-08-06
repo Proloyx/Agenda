@@ -37,6 +37,7 @@ public class DashboardController : Controller
                 User = await _context.Users.FindAsync(user.Userid),
                 Chart = JsonSerializer.Serialize(await _dashboardService.GetChart()),
                 AverageWorkedHours = await _dashboardService.GetAverageWorkedHours(),
+                Nuevo = await _dashboardService.PruebaNew(),
                 AverageMonthTotalWorkedHours = await _dashboardService.GetMonthAverageTotalWorkedHours(),
                 AverageMonthGrossRate = await _dashboardService.GetMonthAverageGrossRate(),
                 AverageMonthNetRate = await _dashboardService.GetMonthAverageNetRate()

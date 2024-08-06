@@ -11,6 +11,7 @@ namespace Agenda.Interfaces
     {
         public Task<Chart> GetChart();
         public Task<decimal> GetAverageWorkedHours();
+        public Task<decimal> PruebaNew();
         public Task<decimal> GetMonthAverageTotalWorkedHours();
         public Task<decimal> GetMonthAverageGrossRate();
         public Task<decimal> GetMonthAverageNetRate();
